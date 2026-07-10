@@ -33,7 +33,13 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-surface text-ink">
+      {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) inject
+          data-* attributes onto <body> before React hydrates, which would
+          otherwise trip a hydration warning. Scoped to this element's attrs. */}
+      <body
+        className="min-h-full flex flex-col bg-surface text-ink"
+        suppressHydrationWarning
+      >
         <Navigation />
         <main className="flex-1">{children}</main>
         <SiteFooter />

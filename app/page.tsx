@@ -8,6 +8,7 @@ import {
   testResults,
 } from "@/lib/data";
 import { FeatureMatrix } from "@/components/FeatureMatrix";
+import { AgentDigestLink } from "@/components/AgentDigestLink";
 
 function StatCard({ value, label }: { value: number | string; label: string }) {
   return (
@@ -47,6 +48,10 @@ export default function Home() {
         <StatCard value={stats.featureCount} label="Features" />
         <StatCard value={stats.verifiedCellCount} label="Verified" />
         <StatCard value={stats.healthyCount} label="Healthy" />
+      </div>
+
+      <div className="mt-6">
+        <AgentDigestLink />
       </div>
 
       <div className="mt-10">

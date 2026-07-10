@@ -560,6 +560,8 @@ The health harness also records each project's **own** CI conclusion (`upstreamC
 
 Removed since the original spec: `/advisor` (AI advisor), `/stacks` (recommended stacks), `/compatibility` (standalone tables — now inline on tool detail), `/dependencies` (standalone map — the dependency tree is now inline on tool detail), and `/matrix` (promoted to the home page `/`).
 
+**Machine-readable exports** (generated into `/public` at build by `scripts/generate-digest.ts`, surfaced via a copy control on the home page): `/llms.txt` (Markdown digest of every tool + features + verified/health state, for pasting into coding agents/skills) and `/catalog.json` (the same, structured).
+
 ### 5.2 Shared Components
 
 | Component | Used on | Description |
@@ -920,14 +922,18 @@ cardano-toolcheck/
 ├── tests/
 │   ├── _devnet/                   # docker compose + wait-ready.sh (Yaci devnet)
 │   ├── aiken/  mesh/  pycardano/  # native test projects + tool.test.json
-├── public/logos/                  # Tool logos
+├── public/
+│   ├── logos/                     # Tool logos
+│   ├── llms.txt                   # generated: Markdown catalogue digest for agents
+│   └── catalog.json               # generated: structured catalogue
 ├── scripts/
 │   ├── health-check.ts            # health + upstream CI (CI)
 │   ├── test-check.ts              # feature-test orchestrator
 │   ├── test-parsers.ts            # native output → cases
 │   ├── test-runners/              # node, pytest, cargo, aiken, jvm, docker, generic, util, types
 │   ├── combine-test-results.ts    # per-tool files → data/test-results.json
-│   └── detect-changed-tools.ts    # dynamic CI job matrix
+│   ├── detect-changed-tools.ts    # dynamic CI job matrix
+│   └── generate-digest.ts         # writes public/llms.txt + public/catalog.json (prebuild)
 ├── .github/workflows/
 │   ├── health-check.yml
 │   └── feature-tests.yml          # detect → offline / devnet → aggregate

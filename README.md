@@ -88,6 +88,21 @@ is split so that only tools whose tests or definitions changed are re-run: a
 `detect` job diffs the change set into a dynamic per-tool job matrix, offline and
 devnet jobs run in isolation, and an `aggregate` job commits the merged results.
 
+## For coding agents & skills
+
+The whole catalogue — every tool, its features, and each feature's verified/health
+state — is exported at build time to two stable, copy-pasteable endpoints so you can
+hand it to a coding agent or wire it into a skill:
+
+| Path | Format | Use |
+|------|--------|-----|
+| `/llms.txt` | Markdown | Paste the link or the full text into an LLM/agent |
+| `/catalog.json` | JSON | Programmatic integration |
+
+The home page has a **Copy link / Copy full text** control for `/llms.txt`. Both files
+are regenerated from the source JSON on every build (`npm run digest`, also run as the
+`prebuild` step) by [`scripts/generate-digest.ts`](./scripts/generate-digest.ts).
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add or update a tool.

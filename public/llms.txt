@@ -1,0 +1,884 @@
+# Cardano Toolcheck — Tooling Catalogue
+
+> A map of Cardano developer tools with their features, maintenance health, and which features are automatically **verified to work** by tests. Generated 2026-07-10; paste this into a coding agent or a skill.
+>
+> Feature state: **verified** (all tests pass) · **partial** (>50% pass) · **failing** (<50% pass) · **untested** (claimed but no tests yet). Health reflects release recency + registry presence; upstream-CI is the project's own CI.
+
+**56** tools · **14** categories · **29** features · **13** verified feature-cells · tests last run 2026-07-10.
+
+## Categories
+
+- **Smart Contract Languages** (`smart-contract-language`): Languages that compile to Untyped Plutus Core (UPLC) for on-chain validator scripts.
+- **Off-Chain SDKs & Transaction Builders** (`off-chain-sdk`): Libraries for building transactions, integrating wallets, and interacting with the chain.
+- **Serialization & Low-Level Libraries** (`serialization-library`): Low-level CBOR encoding, protocol reimplementations, and foundational codec libraries.
+- **API Providers** (`api-provider`): Hosted REST/GraphQL APIs that abstract direct node interaction.
+- **Node & Direct Chain Access** (`node-and-access`): Node software, bridges, and direct chain-access interfaces.
+- **Chain Indexers** (`indexer`): Follow the chain and store structured, queryable blockchain data.
+- **Local Development & Testing** (`dev-environment`): Local devnets, testing frameworks, and emulators for rapid iteration.
+- **Layer 2 & Scalability** (`layer-2`): Off-chain scaling protocols extending Cardano's throughput.
+- **Wallet Integration & CIP Standards** (`wallet-integration`): Libraries for connecting dApps to browser wallets and signing transactions.
+- **Oracles & Off-Chain Data Feeds** (`oracle`): Oracle networks bringing real-world data to on-chain smart contracts.
+- **NFT & Token Tooling** (`nft-token-tooling`): Platforms and libraries for minting and managing NFTs and native tokens.
+- **BaaS & Cloud Platforms** (`baas-platform`): Backend-as-a-Service and managed environments for Cardano development.
+- **Plutus Utilities & Optimization** (`plutus-utilities`): Helper libraries, optimizers, and formal verification for Plutus smart contracts.
+- **Data Analytics & Explorers** (`explorer-analytics`): Block explorers and analytics platforms.
+
+## Tools
+
+### Smart Contract Languages
+
+#### Aiken — `aiken` · production
+The most popular smart contract language for Cardano
+
+- Website: https://aiken-lang.org · Repo: https://github.com/aiken-lang/aiken
+- Languages: Rust-like
+- Health: healthy · latest 1.1.4 · released 2025-03-12 · 2267★ · upstream CI: passing
+- Features:
+  - Compiles to UPLC `compiles-to-uplc` — **verified**
+  - Generates CIP-57 Blueprint `generates-blueprint` — **verified**
+  - Plutus V3 Support `plutus-v3` — **untested**
+  - Built-in Testing Framework `property-based-testing` — **verified**
+  - Editor/LSP Support `lsp-support` — **untested**
+  - Package Manager `package-manager` — **untested**
+- Used by: mesh, lucid-evolution, blaze, pycardano, cardano-client-lib
+
+Aiken is a standalone programming language purpose-built for writing on-chain validator scripts (smart contracts) on Cardano. It compiles to Untyped Plutus Core (UPLC), which is the low-level language executed by Cardano's virtual machine. Aiken does NOT handle off-chain concerns: it does not build transactions, connect to wallets, or query the blockchain. For those tasks you need a separate off-chain SDK (Mesh SDK, Lucid Evolution, Blaze, PyCardano, etc.) that loads the compiled Aiken output (a CIP-57 'blueprint' file called plutus.json). Aiken's syntax is Rust-influenced, statically typed, with pattern matching and algebraic data types. It includes a built-in test runner with property-based testing, a package manager for on-chain library dependencies, LSP for editor support (autocomplete, type checking), and generates CIP-57 blueprint JSON automatically on build. It is the most widely adopted smart contract language in the Cardano ecosystem as of 2025, used by the majority of new DeFi protocols. Aiken focuses exclusively on on-chain validators — it is not a general-purpose language. Developers typically pair Aiken (on-chain) with a TypeScript SDK like Mesh or Blaze (off-chain) as the standard modern Cardano dApp stack.
+
+#### Plinth (Plutus Tx) — `plinth` · production
+IOG's official Haskell-based smart contract compiler for Cardano
+
+- Website: https://plutus.cardano.intersectmbo.org/docs/ · Repo: https://github.com/IntersectMBO/plutus
+- Languages: Haskell
+- Health: healthy · latest 0.4.11 · released 2025-03-25 · 7874★
+- Features:
+  - Compiles to UPLC `compiles-to-uplc` — **untested**
+  - Generates CIP-57 Blueprint `generates-blueprint` — **untested**
+  - Plutus V3 Support `plutus-v3` — **untested**
+  - Formal Verification / Optimization `formal-verification` — **untested**
+- Used by: mesh, lucid-evolution, blaze, atlas, ctl
+
+Plinth (formerly called 'Plutus Tx') is IOG's official Haskell-based smart contract compiler for Cardano. It is a GHC compiler plugin that takes a subset of Haskell code and compiles it to UPLC. Because it uses real Haskell, developers get the full power of Haskell's type system, but it also requires a Haskell development environment (GHC, Cabal/Stack). Plinth generates CIP-57 blueprints and supports Plutus V3 and Conway-era features. IOG is actively developing formal verification tooling specifically for Plinth, using SMT solving and the Lean theorem prover. Plinth does NOT handle off-chain logic — pair it with Atlas (Haskell), CTL (PureScript), or any SDK that can load UPLC/blueprint artifacts. The rename from 'Plutus Tx' to 'Plinth' happened in early 2025 to reduce confusion with the term 'Plutus', which should refer only to the low-level Untyped Plutus Core execution language.
+
+#### OpShin — `opshin` · production
+Write Cardano smart contracts in 100% valid Python
+
+- Website: https://opshin.dev · Repo: https://github.com/OpShin/opshin
+- Languages: Python
+- Health: healthy · latest 2.1.10 · released 2025-05-22 · 7616★ · upstream CI: passing
+- Features:
+  - Compiles to UPLC `compiles-to-uplc` — **untested**
+  - Plutus V3 Support `plutus-v3` — **untested**
+- Depends on: pycardano
+- Used by: pycardano
+
+OpShin is a smart contract language for Cardano whose syntax is 100% valid Python. You write contracts in normal .py files, use standard Python IDEs, linters, and debuggers, and OpShin compiles them to UPLC. The type system is stricter than Python's (for optimization and security), but any OpShin program can be run and unit-tested with standard pytest. OpShin integrates tightly with PyCardano for off-chain code — the OpShin starter kit uses Ogmios/Kupo or Blockfrost via PyCardano's chain context backends. OpShin compiles to Plutus V3 by default. It can be installed via pip ('pip install opshin') and contracts are compiled with 'opshin build contract.py'. The generated artifacts include a .plutus script file that loads directly as a PyCardano PlutusV3Script. OpShin has a bug bounty funded by Project Catalyst.
+
+#### Plutarch — `plutarch` · production
+Typed Haskell eDSL for writing efficient Plutus Core validators
+
+- Website: https://github.com/Plutonomicon/plutarch · Repo: https://github.com/Plutonomicon/plutarch
+- Languages: Haskell eDSL
+- Health: healthy · latest 1.11.9 · released 2025-01-31 · 807★
+- Features:
+  - Compiles to UPLC `compiles-to-uplc` — **untested**
+  - Plutus V3 Support `plutus-v3` — **untested**
+  - Formal Verification / Optimization `formal-verification` — **untested**
+- Used by: liqwid-libs, mesh, lucid-evolution, blaze
+
+Plutarch is a typed embedded domain-specific language (eDSL) within Haskell for writing Plutus Core validators. Unlike Plinth, which compiles Haskell to UPLC via a GHC plugin, Plutarch lets you construct UPLC terms directly using Haskell as a meta-language, giving fine-grained control over the generated code. This typically produces smaller, more efficient UPLC than Plinth — critical for DeFi protocols where script execution costs matter. Plutarch requires strong Haskell skills and a deep understanding of how Plutus Core works. It does not generate CIP-57 blueprints natively (you'd generate them separately or use a helper). It is used in production by Liqwid Labs (lending protocol), and the Liqwid-libs monorepo provides helper libraries built on Plutarch.
+
+#### plu-ts — `plu-ts` · active
+TypeScript-embedded smart contract language — on-chain and off-chain in one codebase
+
+- Website: https://pluts.harmoniclabs.tech · Repo: https://github.com/HarmonicLabs/plu-ts
+- Languages: TypeScript eDSL
+- Health: healthy · latest 2.11.17 · released 2025-03-27 · 8412★
+- Features:
+  - Compiles to UPLC `compiles-to-uplc` — **untested**
+  - Plutus V3 Support `plutus-v3` — **untested**
+  - Builds Transactions `builds-transactions` — **untested**
+  - Signs Transactions `signs-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - CIP-30 Wallet Connector `cip-30` — **untested**
+
+plu-ts is a TypeScript-embedded smart contract language by Harmonic Labs. It lets you write on-chain validators AND off-chain transaction code in the same TypeScript codebase. It implements its own type system that is checked at JavaScript runtime to produce UPLC. Conceptually, plu-ts is closer to Plutarch (an eDSL) than to Aiken (a standalone language) — you construct Plutus Core terms using TypeScript as the host language. Because it covers both on-chain and off-chain, it is the only tool in the ecosystem that lets you write a complete dApp in a single library without needing a separate SDK. It supports CIP-30 wallet integration. The trade-off is a steeper learning curve and a smaller community than the Aiken + Mesh/Blaze combination.
+
+#### Scalus — `scalus` · active
+Cardano smart contracts and dApps in Scala 3
+
+- Website: https://scalus.org · Repo: https://github.com/nau/scalus
+- Languages: Scala 3
+- Health: warning · latest 0.9.8 · released 2024-09-30 · 3930★ · upstream CI: failing
+- Features:
+  - Compiles to UPLC `compiles-to-uplc` — **untested**
+  - Plutus V3 Support `plutus-v3` — **untested**
+  - Builds Transactions `builds-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+
+Scalus is a Scala 3 implementation of the Cardano Plutus platform. It compiles Scala 3 code to Plutus Core and runs on both JVM and JavaScript platforms. It provides a full-stack Cardano development experience: write smart contracts, build transactions, and application logic all in Scala. Includes a UPLC evaluator for local testing and script evaluation. Scalus is the only option for teams that want to stay entirely in the Scala/JVM ecosystem for both on-chain and off-chain code.
+
+#### Helios — `helios` · active
+Lightweight DSL compiling to Plutus Core with JavaScript integration
+
+- Website: https://github.com/Hyperion-BT/Helios · Repo: https://github.com/Hyperion-BT/Helios
+- Languages: Custom DSL
+- Health: healthy · latest 1.10.4 · released 2025-04-05 · 4443★
+- Features:
+  - Compiles to UPLC `compiles-to-uplc` — **untested**
+  - Plutus V3 Support `plutus-v3` — **untested**
+- Used by: lucid-evolution
+
+Helios is a lightweight domain-specific language that compiles to Plutus Core. Its syntax is influenced by JavaScript, making it accessible to web developers. Helios can be used from JavaScript/TypeScript applications and supports Plutus V3. It is simpler and less feature-rich than Aiken — it lacks a built-in package manager, LSP, and property-based testing. Development activity has slowed relative to Aiken, which has become the de facto standard.
+
+#### Marlowe — `marlowe` · active
+Domain-specific language for financial smart contracts with a visual editor
+
+- Website: https://marlowe.iohk.io · Repo: https://github.com/input-output-hk/marlowe-cardano
+- Languages: DSL, Visual
+- Health: healthy · latest 0.0.3 · released 2025-05-04 · 8994★
+- Features:
+  - Compiles to UPLC `compiles-to-uplc` — **untested**
+  - Native Script Support `native-scripts` — **untested**
+- Depends on: cardano-node
+
+Marlowe is a domain-specific language for financial smart contracts on Cardano. It comes with a visual Playground editor where non-programmers can construct contracts by connecting building blocks. Marlowe is designed for finite, deterministic financial instruments: loans, escrow, swaps, insurance. It is NOT a general-purpose smart contract language — it cannot express arbitrary logic. Marlowe contracts are interpreted by an on-chain Marlowe validator, so the developer doesn't write UPLC directly. The ecosystem includes Marlowe CLI, Marlowe Runtime (application backend), Marlowe Runner (web app for deploying contracts), Marlowe TypeScript SDK, and Marlowe Scan (block explorer). Marlowe contracts are formally analyzable — the Playground can check for common issues before deployment.
+
+### Off-Chain SDKs & Transaction Builders
+
+#### Mesh SDK — `mesh` · production
+The most feature-complete TypeScript SDK for Cardano dApps
+
+- Website: https://meshjs.dev · Repo: https://github.com/MeshJS/mesh
+- Languages: TypeScript
+- Health: healthy · latest 0.1.9 · released 2025-03-13 · 8646★ · upstream CI: passing
+- Features:
+  - Builds Transactions `builds-transactions` — **verified**
+  - Signs Transactions `signs-transactions` — **verified**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Coin Selection `coin-selection` — **verified**
+  - Fee Estimation `fee-estimation` — **verified**
+  - CIP-30 Wallet Connector `cip-30` — **untested**
+  - CIP-95 Governance Bridge `cip-95` — **untested**
+  - Hardware Wallet Support `hardware-wallet` — **untested**
+  - Mints Native Tokens/NFTs `mints-tokens` — **untested**
+  - Reads CIP-57 Blueprints `reads-blueprint` — **untested**
+  - Evaluates Plutus Scripts `script-evaluation` — **untested**
+  - CBOR Serialization `cbor-serialization` — **verified**
+  - Native Script Support `native-scripts` — **untested**
+- Depends on: csl, cml
+- Providers: blockfrost, koios, maestro, ogmios, utxo-rpc, yaci-devkit, hydra
+
+Mesh SDK is the most feature-complete TypeScript SDK for Cardano. It provides transaction building, wallet integration (CIP-30 and CIP-95 for governance), NFT minting, staking, governance actions, and React components via @meshsdk/react. Internally it uses the Cardano Serialization Lib (CSL) and CML for CBOR encoding. It supports 7 pluggable providers: Blockfrost, Koios, Maestro, Ogmios, UTxO RPC, Yaci DevKit, and Hydra (beta). It reads CIP-57 blueprints from Aiken, Plinth, and Plutarch. Mesh is used by hundreds of dApps and is the recommended starting point for TypeScript developers. It provides Next.js starter templates ('npx meshjs your-app-name'), extensive documentation at meshjs.dev, and step-by-step guides covering everything from wallet connection to smart contract deployment. It also includes a multi-signature platform at multisig.meshjs.dev.
+
+#### Lucid Evolution — `lucid-evolution` · production
+Modular TypeScript SDK for Cardano — successor to Lucid
+
+- Website: https://no-witness-labs.github.io/evolution-sdk · Repo: https://github.com/no-witness-labs/evolution-sdk
+- Languages: TypeScript
+- Health: healthy · latest 0.6.14 · released 2025-02-21 · 7966★ · upstream CI: passing
+- Features:
+  - Builds Transactions `builds-transactions` — **untested**
+  - Signs Transactions `signs-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Coin Selection `coin-selection` — **untested**
+  - Fee Estimation `fee-estimation` — **untested**
+  - CIP-30 Wallet Connector `cip-30` — **untested**
+  - Mints Native Tokens/NFTs `mints-tokens` — **untested**
+  - Reads CIP-57 Blueprints `reads-blueprint` — **untested**
+  - CBOR Serialization `cbor-serialization` — **untested**
+- Depends on: cml
+- Providers: blockfrost, koios, maestro, ogmios
+
+Lucid Evolution is the actively maintained successor to the original Lucid library (by SpaceBudz). It is a TypeScript SDK reorganized as a monorepo with modular packages. It uses CML (Cardano Multiplatform Lib) for serialization instead of the older CSL. Supports Plutus V3, Conway-era features, and CIP-57 blueprints. Providers include Blockfrost, Koios, Maestro, and Ogmios. Used in production by major DeFi protocols: Genius Yield, Splash, Ada Markets, Meld, Summon, Strike Finance, Atrium, and others. Does NOT include React components (unlike Mesh). Blueprint schema support is being enhanced as part of a Catalyst-funded initiative aligning with CIP-0057 across Aiken, PlutusTx, and Plutarch.
+
+#### Blaze — `blaze` · production
+Lightweight, fast TypeScript SDK for Cardano transactions
+
+- Website: https://github.com/butaneprotocol/blaze-cardano · Repo: https://github.com/butaneprotocol/blaze-cardano
+- Languages: TypeScript
+- Health: healthy · latest 3.2.19 · released 2025-03-06 · 8693★ · upstream CI: passing
+- Features:
+  - Builds Transactions `builds-transactions` — **untested**
+  - Signs Transactions `signs-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Coin Selection `coin-selection` — **untested**
+  - Fee Estimation `fee-estimation` — **untested**
+  - CIP-30 Wallet Connector `cip-30` — **untested**
+  - Mints Native Tokens/NFTs `mints-tokens` — **untested**
+  - Reads CIP-57 Blueprints `reads-blueprint` — **untested**
+  - CBOR Serialization `cbor-serialization` — **untested**
+- Providers: blockfrost, maestro, ogmios, utxo-rpc
+
+Blaze is a lightweight TypeScript SDK for Cardano transaction building, designed for minimal dependencies and fast iteration. It is a monorepo with built-in providers for Blockfrost, Kupmios (Kupo+Ogmios combined), and Maestro. UTxO RPC is available as an external provider package. Blaze does NOT have a built-in Koios provider. Used in production by SundaeSwap, jpg.store, Butane, Fortuna, and Rocket. Blaze is leaner than Mesh — it does not include React components, governance tooling (CIP-95), or as many provider options. It focuses on doing core transaction building well with minimal overhead. It can load CIP-57 blueprint artifacts from Aiken, Plinth, and Plutarch.
+
+#### PyCardano — `pycardano` · production
+Standalone Python library for Cardano — no cardano-cli dependency
+
+- Website: https://pycardano.readthedocs.io · Repo: https://github.com/Python-Cardano/pycardano
+- Languages: Python
+- Health: healthy · latest 3.0.2 · released 2025-02-18 · 589★ · upstream CI: passing
+- Features:
+  - Builds Transactions `builds-transactions` — **verified**
+  - Signs Transactions `signs-transactions` — **verified**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Coin Selection `coin-selection` — **verified**
+  - Fee Estimation `fee-estimation` — **verified**
+  - Mints Native Tokens/NFTs `mints-tokens` — **untested**
+  - CBOR Serialization `cbor-serialization` — **verified**
+  - Native Script Support `native-scripts` — **untested**
+- Used by: opshin
+- Providers: blockfrost, ogmios, yaci-devkit
+
+PyCardano is a standalone Python library for creating and signing Cardano transactions. It has NO dependency on cardano-cli or external serialization tools — all CBOR encoding is implemented natively in Python, making it lightweight and easy to install in any Python environment. Supports multiple backend providers: Blockfrost (via BlockFrostChainContext), Ogmios (via OgmiosChainContext), Kupo (via KupoChainContextExtension for UTxO pattern matching), and Yaci DevKit (via the pccontext library's YaciDevkitChainContext). PyCardano is OpShin's primary off-chain partner — OpShin-compiled scripts load directly as PyCardano PlutusV3Script objects. It also supports loading Aiken and Plinth compiled artifacts. Covers native script minting, Plutus script interaction, coin selection, fee calculation, and multi-asset transactions.
+
+#### Cardano Client Lib — `cardano-client-lib` · production
+Modular Java SDK for Cardano with pluggable backends
+
+- Website: https://github.com/bloxbean/cardano-client-lib · Repo: https://github.com/bloxbean/cardano-client-lib
+- Languages: Java
+- Health: healthy · latest 2.1.12 · released 2025-02-15 · 6132★ · upstream CI: passing
+- Features:
+  - Builds Transactions `builds-transactions` — **untested**
+  - Signs Transactions `signs-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Coin Selection `coin-selection` — **untested**
+  - Fee Estimation `fee-estimation` — **untested**
+  - Mints Native Tokens/NFTs `mints-tokens` — **untested**
+  - CBOR Serialization `cbor-serialization` — **untested**
+  - Native Script Support `native-scripts` — **untested**
+- Used by: yaci-cardano-test
+- Providers: blockfrost, koios, ogmios
+
+Cardano Client Lib (CCL) is a Java SDK for Cardano by BloxBean. It follows a modular Maven architecture: a core module plus pluggable backend modules for Blockfrost (cardano-client-backend-blockfrost), Koios (cardano-client-backend-koios), and Ogmios/Kupo (cardano-client-backend-ogmios). Each backend is a separate Maven dependency so you include only what you need. CCL supports transaction building, smart contract interaction (loading Plutus scripts), coin selection, native token minting, and account management. It works seamlessly with Yaci DevKit (built by the same BloxBean team) for local testing, and the yaci-cardano-test library provides JUnit 5 integration with testcontainers for automated testing. Also usable from Kotlin and other JVM languages.
+
+#### cardano-js-sdk — `cardano-js-sdk` · production
+Official JavaScript SDK for Cardano by IOG with hardware wallet support
+
+- Website: https://github.com/input-output-hk/cardano-js-sdk · Repo: https://github.com/input-output-hk/cardano-js-sdk
+- Languages: TypeScript
+- Health: healthy · latest 0.2.15 · released 2025-05-20 · 7458★
+- Features:
+  - Builds Transactions `builds-transactions` — **untested**
+  - Signs Transactions `signs-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Coin Selection `coin-selection` — **untested**
+  - CIP-30 Wallet Connector `cip-30` — **untested**
+  - Hardware Wallet Support `hardware-wallet` — **untested**
+  - CBOR Serialization `cbor-serialization` — **untested**
+- Depends on: csl
+- Used by: lucid-evolution
+- Providers: blockfrost, ogmios
+
+cardano-js-sdk is IOG's official JavaScript/TypeScript SDK for interacting with Cardano. It provides key management with multiple options including hardware wallet support (Ledger, Trezor). It is used internally by the Lace wallet. The SDK is comprehensive but has a larger surface area and more complex API than Mesh or Blaze. It is a potential dependency injection target for Lucid Evolution 2.0. Supports Blockfrost and Ogmios providers.
+
+#### CardanoSharp — `cardanosharp` · production
+Cardano cryptographic and serialization library for .NET
+
+- Website: https://www.cardanosharp.com · Repo: https://github.com/CardanoSharp/cardanosharp-wallet
+- Languages: C#, .NET
+- Health: healthy · latest 3.6.16 · released 2025-03-14 · 7805★
+- Features:
+  - Builds Transactions `builds-transactions` — **untested**
+  - Signs Transactions `signs-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Coin Selection `coin-selection` — **untested**
+  - Mints Native Tokens/NFTs `mints-tokens` — **untested**
+  - CBOR Serialization `cbor-serialization` — **untested**
+- Providers: blockfrost, koios
+
+CardanoSharp.Wallet is a Cardano cryptographic and serialization library for .NET (C#) applications. It provides transaction building, address derivation, key management, coin selection, minting, and CBOR encoding — all in pure .NET with no native dependencies. It supports Blockfrost and Koios as backend providers. It is the only .NET-native Cardano SDK.
+
+#### CTL (cardano-transaction-lib) — `ctl` · active
+PureScript library for building Cardano smart contract transactions in the browser
+
+- Website: https://github.com/Plutonomicon/cardano-transaction-lib · Repo: https://github.com/Plutonomicon/cardano-transaction-lib
+- Languages: PureScript
+- Health: healthy · latest 0.9.3 · released 2025-03-29 · 3430★
+- Features:
+  - Builds Transactions `builds-transactions` — **untested**
+  - Signs Transactions `signs-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - CIP-30 Wallet Connector `cip-30` — **untested**
+  - Mints Native Tokens/NFTs `mints-tokens` — **untested**
+- Depends on: ogmios, kupo
+- Providers: ogmios
+
+CTL (cardano-transaction-lib) is a PureScript library that ports Plutus off-chain code functionality to the browser and Node.js. It aims to provide a PureScript equivalent of the Haskell off-chain code that traditionally accompanied Plutus on-chain code. CTL uses Ogmios and Kupo as its backend. It supports CIP-30 wallet integration and can build, sign, and submit transactions with Plutus script interaction.
+
+#### Atlas — `atlas` · active
+Haskell application backend for Plutus smart contracts
+
+- Website: https://github.com/geniusyield/atlas · Repo: https://github.com/geniusyield/atlas
+- Languages: Haskell
+- Health: warning · latest 0.9.8 · released 2024-11-09 · 7810★
+- Features:
+  - Builds Transactions `builds-transactions` — **untested**
+  - Signs Transactions `signs-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Coin Selection `coin-selection` — **untested**
+- Depends on: ogmios, kupo
+- Providers: ogmios, maestro
+
+Atlas is an application backend by Genius Yield designed to simplify the development of off-chain code for on-chain Plutus smart contracts in Haskell. It supports Maestro and Ogmios+Kupo as backend providers. Atlas is the Haskell-native alternative to using a TypeScript SDK — when your on-chain code is in Plinth or Plutarch, Atlas lets you keep the entire stack in Haskell.
+
+#### Cometa.js — `cometa-js` · active
+Fast JavaScript toolkit for Cardano transaction building
+
+- Website: https://cometajs.readthedocs.io · Repo: https://github.com/Biglup/cometa.js
+- Languages: JavaScript
+- Health: warning · latest 0.2.1 · released 2024-10-24 · 1926★
+- Features:
+  - Builds Transactions `builds-transactions` — **untested**
+  - Signs Transactions `signs-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - CBOR Serialization `cbor-serialization` — **untested**
+
+Cometa.js is a fast, browser and Node-ready JavaScript toolkit for streamlined Cardano transaction building and dApp smart-contract interactions. It focuses on web and frontend environments with a lightweight footprint.
+
+#### Cometa.py — `cometa-py` · active
+High-performance Python library for Cardano automation
+
+- Website: https://cometapy.readthedocs.io · Repo: https://github.com/Biglup/cometa.py
+- Languages: Python
+- Health: healthy · latest 0.2.5 · released 2024-12-31 · 2118★
+- Features:
+  - Builds Transactions `builds-transactions` — **untested**
+  - Signs Transactions `signs-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - CBOR Serialization `cbor-serialization` — **untested**
+
+Cometa.py is a high-performance Python library for Cardano, focused on rapid prototyping, scripting, and backend automation for transaction building and smart-contract workflows.
+
+#### Tx-Village — `tx-village` · active
+Rust/Haskell ecosystem for Cardano smart contract transactions
+
+- Website: https://mlabs-haskell.github.io/tx-village · Repo: https://github.com/mlabs-haskell/tx-village
+- Languages: Rust, Haskell
+- Health: healthy · latest 1.4.3 · released 2025-05-07 · 9131★
+- Features:
+  - Builds Transactions `builds-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Indexes Chain Data `indexes-chain` — **untested**
+
+Tx-Village is MLabs' ecosystem of libraries and tools for working with Cardano smart contract transactions in Rust and Haskell. It provides transaction building, indexing, and submission capabilities for teams working in these languages.
+
+### Serialization & Low-Level Libraries
+
+#### CML (Cardano Multiplatform Lib) — `cml` · production
+Rust/WASM codec library for Cardano data structures — successor to CSL
+
+- Website: https://dcspark.github.io/cardano-multiplatform-lib/ · Repo: https://github.com/dcSpark/cardano-multiplatform-lib
+- Languages: Rust, WASM
+- Health: healthy · latest 3.2.19 · released 2025-03-06 · 3213★
+- Features:
+  - CBOR Serialization `cbor-serialization` — **untested**
+  - Builds Transactions `builds-transactions` — **untested**
+  - Native Script Support `native-scripts` — **untested**
+- Used by: lucid-evolution, mesh
+
+CML (Cardano Multiplatform Lib) is dcSpark's collection of encoding/decoding codecs for Cardano data structures, intended to replace the older Cardano Serialization Lib (CSL). Serialization code is auto-generated from Cardano's official CDDL specification using cddl-codegen, which guarantees it stays up-to-date. CML provides Rust crates and WASM bindings for browser and Node.js. It includes modules for chain parsing (including multi-era/historical), CIP-25 metadata, and CIP-36. Lucid Evolution uses CML internally. Most dApp developers do NOT use CML directly — it sits beneath higher-level SDKs.
+
+#### Cardano Serialization Lib — `csl` · legacy
+Original Rust/WASM serialization library for Cardano
+
+- Website: https://developers.cardano.org/docs/get-started/cardano-serialization-lib/overview/ · Repo: https://github.com/niccokunzmann/cardano-serialization-lib
+- Languages: Rust, WASM
+- Health: failing · latest 1.1.3 · released 2023-11-26 · 3399★
+- Features:
+  - CBOR Serialization `cbor-serialization` — **untested**
+  - Builds Transactions `builds-transactions` — **untested**
+  - Native Script Support `native-scripts` — **untested**
+- Used by: mesh, cardano-js-sdk
+
+The Cardano Serialization Lib (CSL) is the original serialization and deserialization library for Cardano's Shelley-era data structures. It provides Rust crates and WASM bindings. CSL is being superseded by CML (Cardano Multiplatform Lib) which is auto-generated from CDDL specs and supports multi-era parsing. Mesh SDK still uses CSL internally. New projects should prefer CML.
+
+#### Pallas — `pallas` · production
+Native Rust reimplementation of Cardano's Ouroboros logic
+
+- Website: https://github.com/txpipe/pallas · Repo: https://github.com/txpipe/pallas
+- Languages: Rust
+- Health: healthy · latest 2.11.0 · released 2025-04-12 · 6016★ · upstream CI: passing
+- Features:
+  - CBOR Serialization `cbor-serialization` — **untested**
+  - Ouroboros Mini-Protocols `ouroboros-miniprotocols` — **untested**
+- Used by: oura, scrolls, carp, dolos
+
+Pallas is an expanding collection of Rust modules that re-implement common Ouroboros/Cardano logic natively in Rust. It is not a standalone application — it is a foundational base layer for building higher-level tools. Pallas powers TxPipe's entire Rust-based toolchain: Oura (event pipeline), Scrolls (chain indexer), Dolos (data node), and other tools. It provides CBOR parsing, Ouroboros mini-protocol implementations, and chain data types.
+
+#### gOuroboros — `gouroboros` · production
+Go implementation of Cardano's Ouroboros network protocols
+
+- Website: https://github.com/blinklabs-io/gouroboros · Repo: https://github.com/blinklabs-io/gouroboros
+- Languages: Go
+- Health: healthy · latest 0.6.13 · released 2025-04-10 · 7598★
+- Features:
+  - CBOR Serialization `cbor-serialization` — **untested**
+  - Ouroboros Mini-Protocols `ouroboros-miniprotocols` — **untested**
+- Used by: dingo, tx-submit-api
+
+gOuroboros is a Go implementation of the Cardano Ouroboros protocol family of mini-protocols. It provides the foundation for Go-based Cardano tools, including Dingo (data node), tx-submit-api, and other Blink Labs projects. It enables direct communication with Cardano nodes using both Node-to-Node and Node-to-Client protocols.
+
+### API Providers
+
+#### Blockfrost — `blockfrost` · production
+The most widely used Cardano API — free tier, instant setup
+
+- Website: https://blockfrost.io · Repo: https://github.com/blockfrost
+- Languages: REST API
+- Health: healthy · latest 2.3.16 · released 2025-03-27 · 3732★
+- Features:
+  - Provides Query API `provides-query-api` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+- Depends on: cardano-node, db-sync
+- Used by: mesh, lucid-evolution, blaze, pycardano, cardano-client-lib, cardano-js-sdk, cardanosharp
+
+Blockfrost is the most widely used Cardano API provider. It offers a REST API that abstracts all node interaction: querying UTxOs, submitting transactions, fetching protocol parameters, account info, asset metadata, pool data, and more. Free tier available (50,000 requests/day). Official SDKs exist for JavaScript, Python, Go, Rust, .NET, Crystal, Kotlin, Elixir, Swift, and more. Blockfrost internally uses Cardano DB Sync for its data. Almost every Cardano off-chain SDK supports Blockfrost as a provider out of the box. Sign up at blockfrost.io for an API key — no credit card required for the free tier.
+
+#### Koios — `koios` · production
+Decentralized, community-operated Cardano query layer — no API key needed
+
+- Website: https://www.koios.rest · Repo: https://github.com/cardano-community/koios-artifacts
+- Languages: REST API
+- Health: healthy · latest 2.8.14 · released 2025-02-11 · 116★
+- Features:
+  - Provides Query API `provides-query-api` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+- Depends on: cardano-node, db-sync
+- Used by: mesh, cardano-client-lib, cardanosharp
+
+Koios is a decentralized, community-operated Cardano query layer. Unlike Blockfrost (centralized, company-operated), Koios runs on multiple redundant endpoints operated by different community members. It is open-source, free to use, and requires no API key. Supported as a provider by Mesh SDK, Cardano Client Lib, and CardanoSharp. Not natively supported by Blaze. Backed by DB Sync on each node.
+
+#### Maestro — `maestro` · production
+Blockchain indexer, APIs, and event management for Cardano
+
+- Website: https://www.gomaestro.org
+- Languages: REST API
+- Health: healthy · latest 0.4.4 · released 2025-03-01 · 5918★
+- Features:
+  - Provides Query API `provides-query-api` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Indexes Chain Data `indexes-chain` — **untested**
+- Depends on: cardano-node
+- Used by: mesh, lucid-evolution, blaze, atlas
+
+Maestro is a blockchain indexer, API provider, and event management system for Cardano. It offers REST APIs plus webhook-based event streams for real-time monitoring of on-chain activity. Maestro uses its own custom indexer (not DB Sync), which enables specialized queries and event-driven architectures. Supported as a provider by Mesh, Lucid Evolution, Blaze, and Atlas.
+
+#### TangoCrypto — `tangocrypto` · active
+High-availability APIs and developer tools for Cardano
+
+- Website: https://www.tangocrypto.com
+- Languages: REST API
+- Health: healthy · latest 3.5.13 · released 2024-11-22 · 4217★
+- Features:
+  - Provides Query API `provides-query-api` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+- Depends on: cardano-node
+
+TangoCrypto provides a suite of high-availability APIs and developer tools for fast, reliable Cardano network access. It offers REST APIs for querying blockchain data and submitting transactions, with SDKs and tooling to reduce development time. It is an alternative to Blockfrost with its own infrastructure.
+
+#### Cardano GraphQL — `cardano-graphql` · production
+Typed, queryable GraphQL API for Cardano by the Cardano Foundation
+
+- Website: https://github.com/cardano-foundation/cardano-graphql · Repo: https://github.com/cardano-foundation/cardano-graphql
+- Languages: GraphQL
+- Health: healthy · latest 3.5.12 · released 2025-01-29 · 7509★
+- Features:
+  - Provides Query API `provides-query-api` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+- Depends on: cardano-node, db-sync
+
+Cardano GraphQL is a cross-platform, typed, and queryable API for Cardano maintained by the Cardano Foundation. It provides a GraphQL schema over Cardano blockchain data (backed by DB Sync) and contains multiple composable packages for building custom GraphQL services. Unlike REST-based providers, GraphQL lets you request exactly the fields you need in a single query.
+
+### Node & Direct Chain Access
+
+#### Cardano Node — `cardano-node` · production
+The core node software that runs the Cardano network
+
+- Website: https://github.com/IntersectMBO/cardano-node · Repo: https://github.com/IntersectMBO/cardano-node
+- Languages: Haskell
+- Health: healthy · latest 0.0.10 · released 2025-05-28 · 1090★
+- Features:
+  - Connects to Node `connects-to-node` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+- Used by: ogmios, db-sync, kupo, oura, blockfrost, koios, maestro, mithril, yaci-store, dingo, cardano-cli
+
+The Cardano node is the core software that runs the Cardano network. It implements the Ouroboros consensus protocol, validates and produces blocks, and maintains the ledger state. Every other tool in the ecosystem ultimately connects to a Cardano node — either directly (Ogmios, Kupo, DB Sync) or indirectly via API providers (Blockfrost, Koios, Maestro run their own nodes). Most dApp developers do NOT need to run their own node — API providers handle this. Running a node is required for stake pool operators, infrastructure providers, and self-hosted backend setups.
+
+#### Cardano CLI — `cardano-cli` · production
+Command-line interface for direct Cardano node interaction
+
+- Website: https://github.com/IntersectMBO/cardano-cli · Repo: https://github.com/IntersectMBO/cardano-cli
+- Languages: CLI
+- Health: healthy · latest 3.0.17 · released 2025-02-18 · 4889★
+- Features:
+  - Builds Transactions `builds-transactions` — **untested**
+  - Signs Transactions `signs-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Mints Native Tokens/NFTs `mints-tokens` — **untested**
+  - Native Script Support `native-scripts` — **untested**
+- Depends on: cardano-node
+
+cardano-cli is the command-line tool for interacting with a running Cardano node. It can build and sign transactions, manage addresses and keys, query the ledger state, mint tokens, register stake pools, and submit governance actions. It requires a running Cardano node with a local socket connection. cardano-cli is the lowest-level way to interact with Cardano. Most dApp developers use an SDK instead, but cardano-cli is useful for scripting, one-off operations, and understanding how Cardano works at the protocol level.
+
+#### Ogmios — `ogmios` · production
+Lightweight WebSocket bridge for Cardano node via JSON-RPC
+
+- Website: https://ogmios.dev · Repo: https://github.com/CardanoSolutions/ogmios
+- Languages: WebSocket, JSON-RPC
+- Health: healthy · latest 3.0.10 · released 2025-05-25 · 1833★ · upstream CI: passing
+- Features:
+  - Connects to Node `connects-to-node` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Provides Query API `provides-query-api` — **untested**
+- Depends on: cardano-node
+- Used by: mesh, lucid-evolution, blaze, pycardano, cardano-client-lib, ctl, atlas, yaci-devkit
+
+Ogmios is a lightweight bridge interface sitting in front of a Cardano node. It translates the node's Ouroboros mini-protocols into a JSON-RPC WebSocket API that any programming language can consume. It is NOT a hosted service — you run it yourself alongside your own Cardano node. Ogmios handles transaction submission and evaluation (execution unit calculation), protocol parameter queries, and ledger state queries. For UTxO queries by address or pattern matching, Ogmios is typically paired with Kupo. The Ogmios+Kupo combination is the standard self-hosted alternative to Blockfrost. Supported as a provider by Mesh, Lucid Evolution, Blaze, PyCardano, Cardano Client Lib, CTL, and Atlas.
+
+#### UTxO RPC — `utxo-rpc` · active
+Standardized gRPC interface for UTxO-based blockchains
+
+- Website: https://utxorpc.org · Repo: https://github.com/utxorpc/spec
+- Languages: gRPC
+- Health: healthy · latest 1.7.12 · released 2024-12-14 · 5075★
+- Features:
+  - Connects to Node `connects-to-node` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Provides Query API `provides-query-api` — **untested**
+- Depends on: cardano-node
+- Used by: mesh, blaze, oura, scrolls
+
+UTxO RPC (U5C) is a standardized gRPC interface for UTxO-based blockchains (Cardano and others). It uses Protocol Buffers for a compact, high-performance binary format. Server implementations include Dolos (Rust data node by TxPipe) and Blink Labs' Node API. Client SDKs exist for Rust, Python, Go, Node.js, Deno, and .NET. Supported as a provider by Mesh SDK and Blaze (via external provider package). UTxO RPC's advantage over REST is performance and type safety via gRPC.
+
+#### Dingo — `dingo` · active
+Cardano data node written in Go
+
+- Website: https://github.com/blinklabs-io/dingo · Repo: https://github.com/blinklabs-io/dingo
+- Languages: Go
+- Health: healthy · latest 2.6.5 · released 2025-01-22 · 1776★
+- Features:
+  - Connects to Node `connects-to-node` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+- Depends on: gouroboros
+
+Dingo is a Cardano blockchain data node written in Go by Blink Labs. It participates in network communications using the Ouroboros Node-to-Node mini-protocols (powered by gOuroboros). Dingo is a lightweight alternative to running a full Cardano node when you only need to follow the chain and serve data.
+
+#### Mithril — `mithril` · production
+Fast node bootstrapping and lightweight blockchain certification
+
+- Website: https://mithril.network · Repo: https://github.com/input-output-hk/mithril
+- Languages: Rust, JavaScript, CLI
+- Health: healthy · latest 2.9.16 · released 2025-03-03 · 8036★ · upstream CI: passing
+- Features:
+  - Connects to Node `connects-to-node` — **untested**
+  - Layer 2 Scaling `layer-2-scaling` — **untested**
+- Depends on: cardano-node
+
+Mithril is a protocol for fast node bootstrapping and secure, lightweight blockchain certification. Instead of syncing a Cardano node from genesis (which can take hours), Mithril provides certified snapshots that allow a node to bootstrap in minutes. It uses stake-based threshold signatures for security. Mithril also enables light client verification — applications can verify blockchain data without running a full node. Essential for efficient node operations and scaling infrastructure.
+
+#### Oura — `oura` · production
+Rust pipeline for streaming Cardano blockchain events
+
+- Website: https://github.com/txpipe/oura · Repo: https://github.com/txpipe/oura
+- Languages: Rust
+- Health: healthy · latest 0.11.9 · released 2025-02-01 · 7566★ · upstream CI: passing
+- Features:
+  - Connects to Node `connects-to-node` — **untested**
+  - Indexes Chain Data `indexes-chain` — **untested**
+- Depends on: pallas, cardano-node
+
+Oura is a Rust-native stream processing pipeline for Cardano. It connects to the tip of a Cardano node (via Ouroboros mini-protocols or UTxO RPC) and emits structured events to external systems like Kafka, Elasticsearch, Redis, webhooks, or files. Built on Pallas. Oura is for real-time event processing — it doesn't store data itself, but streams it to your preferred sink.
+
+#### Dolos — `dolos` · active
+Lightweight Rust data node for Cardano with UTxO RPC
+
+- Website: https://github.com/txpipe/dolos · Repo: https://github.com/txpipe/dolos
+- Languages: Rust
+- Health: healthy · latest 2.7.14 · released 2025-01-06 · 7852★
+- Features:
+  - Connects to Node `connects-to-node` — **untested**
+  - Provides Query API `provides-query-api` — **untested**
+- Depends on: pallas
+- Used by: utxo-rpc
+
+Dolos is a trimmed-down, Rust-based Cardano 'data node' built by TxPipe on top of Pallas. Unlike the full Cardano node, Dolos only serves data — it syncs from upstream relay nodes and keeps a local copy of the chain. It uses UTxO RPC as its main interface for client integration. Dolos is lighter than a full node and is designed as a UTxO RPC server.
+
+#### tx-submit-api — `tx-submit-api` · active
+Simple HTTP API for submitting Cardano transactions
+
+- Website: https://github.com/blinklabs-io/tx-submit-api · Repo: https://github.com/blinklabs-io/tx-submit-api
+- Languages: Go, HTTP
+- Health: healthy · latest 3.4.14 · released 2025-02-26 · 8661★
+- Features:
+  - Submits Transactions `submits-transactions` — **untested**
+- Depends on: gouroboros
+
+tx-submit-api is a simple HTTP API by Blink Labs that accepts CBOR-encoded Cardano transactions and submits them to a Cardano node using the Ouroboros LocalTxSubmission protocol. It is a minimal, focused tool that does one thing: submit transactions. Useful for custom infrastructure setups where you only need transaction submission without a full API provider.
+
+### Chain Indexers
+
+#### Cardano DB Sync — `db-sync` · production
+Core chain indexer storing all blockchain data in PostgreSQL
+
+- Website: https://docs.cardano.org/cardano-components/cardano-db-sync/about-db-sync · Repo: https://github.com/IntersectMBO/cardano-db-sync
+- Languages: Haskell, PostgreSQL
+- Health: healthy · latest 3.5.11 · released 2025-03-18 · 4521★
+- Features:
+  - Indexes Chain Data `indexes-chain` — **untested**
+  - Provides Query API `provides-query-api` — **untested**
+- Depends on: cardano-node
+- Used by: blockfrost, koios, cardano-graphql
+
+Cardano DB Sync is one of Cardano's core components. It follows the Cardano chain and stores all blockchain data (blocks, transactions, UTxOs, metadata, staking, governance) in a PostgreSQL database. It is the most comprehensive indexer — it indexes everything. API providers like Blockfrost and Koios use DB Sync internally. The trade-off is resource-heaviness: DB Sync requires significant disk space (hundreds of GB), RAM, and time to sync from genesis. Most dApp developers never run DB Sync directly.
+
+#### Yaci Store — `yaci-store` · production
+Modular Java-based Cardano indexer with Blockfrost-compatible APIs
+
+- Website: https://store.yaci.xyz · Repo: https://github.com/bloxbean/yaci-store
+- Languages: Java
+- Health: healthy · latest 2.5.14 · released 2025-02-23 · 2524★
+- Features:
+  - Indexes Chain Data `indexes-chain` — **untested**
+  - Provides Query API `provides-query-api` — **untested**
+  - Blockfrost-Compatible API `blockfrost-compat-api` — **untested**
+- Depends on: cardano-node
+- Used by: yaci-devkit
+
+Yaci Store is a modular, high-performance Cardano blockchain indexer and datastore by BloxBean (same team as Cardano Client Lib and Yaci DevKit). Built on top of the Yaci Java library, it offers a plugin framework for custom extensions. It exposes Blockfrost-compatible API endpoints, meaning SDKs configured for Blockfrost can point to Yaci Store with no code changes. It is the built-in indexer inside Yaci DevKit. Lighter than DB Sync, uses H2 or PostgreSQL.
+
+#### Kupo — `kupo` · production
+Lightweight, pattern-matching chain-index for Cardano
+
+- Website: https://cardanosolutions.github.io/kupo · Repo: https://github.com/CardanoSolutions/kupo
+- Languages: Haskell
+- Health: healthy · latest 0.4.6 · released 2025-03-25 · 2354★ · upstream CI: passing
+- Features:
+  - Indexes Chain Data `indexes-chain` — **untested**
+  - Queries UTxOs `queries-utxos` — **untested**
+  - Provides Query API `provides-query-api` — **untested**
+- Depends on: cardano-node
+- Used by: blaze, ctl, atlas, pycardano, cardano-client-lib, yaci-devkit
+
+Kupo is a lightweight, configurable chain-index for Cardano. Unlike full indexers like DB Sync (which index everything), Kupo lets you specify patterns to match — specific addresses, policy IDs, output references, etc. — so it only stores what you need. This makes it very fast and resource-efficient. Kupo is typically paired with Ogmios to provide a complete self-hosted backend: Ogmios handles tx submission and evaluation, Kupo handles UTxO queries by pattern. This Ogmios+Kupo combination is supported by Blaze (as 'Kupmios'), CTL, Atlas, PyCardano, and Cardano Client Lib.
+
+#### Scrolls — `scrolls` · active
+Read-optimized chain data collections via map/reduce over Cardano history
+
+- Website: https://github.com/txpipe/scrolls · Repo: https://github.com/txpipe/scrolls
+- Languages: Rust
+- Health: warning · latest 1.2.14 · released 2024-09-29 · 251★
+- Features:
+  - Indexes Chain Data `indexes-chain` — **untested**
+- Depends on: pallas
+
+Scrolls is a TxPipe tool that builds and maintains read-optimized collections of Cardano's on-chain entities. It crawls the chain history and aggregates data to reflect the current state using a map/reduce approach. Once synced, Scrolls watches the tip to keep collections up-to-date. It outputs to Redis, Elasticsearch, or other storage backends. Built on Pallas and supports UTxO RPC as an input protocol.
+
+#### Carp — `carp` · active
+Modular Rust/PostgreSQL indexer for Cardano by dcSpark
+
+- Website: https://github.com/dcSpark/carp · Repo: https://github.com/dcSpark/carp
+- Languages: Rust, PostgreSQL
+- Health: healthy · latest 3.0.2 · released 2025-05-09 · 1369★
+- Features:
+  - Indexes Chain Data `indexes-chain` — **untested**
+  - Provides Query API `provides-query-api` — **untested**
+- Depends on: pallas
+
+Carp is dcSpark's modular indexer that syncs Cardano blockchain data to a PostgreSQL database. It uses a task-based architecture where each indexing task is a separate module. Built on Pallas for chain parsing. Lighter than DB Sync with a more modular design.
+
+#### Ledger Sync — `ledger-sync` · active
+Cardano Foundation's Java-based chain synchronization tool
+
+- Website: https://github.com/cardano-foundation/cf-ledger-sync · Repo: https://github.com/cardano-foundation/cf-ledger-sync
+- Languages: Java
+- Health: healthy · latest 3.10.16 · released 2025-05-17 · 201★
+- Features:
+  - Indexes Chain Data `indexes-chain` — **untested**
+- Depends on: cardano-node
+
+Ledger Sync is the Cardano Foundation's Java-based chain synchronization tool for indexing Cardano blockchain data. It provides structured data indexing as an alternative to DB Sync, built in Java for teams in the JVM ecosystem.
+
+### Local Development & Testing
+
+#### Yaci DevKit — `yaci-devkit` · production
+Complete local Cardano devnet in seconds — the standard local development tool
+
+- Website: https://devkit.yaci.xyz · Repo: https://github.com/bloxbean/yaci-devkit
+- Languages: Java, Docker, NPM
+- Health: healthy · latest 1.5.1 · released 2025-03-20 · 4539★
+- Features:
+  - Local Development Network `local-devnet` — **untested**
+  - Connects to Node `connects-to-node` — **untested**
+  - Indexes Chain Data `indexes-chain` — **untested**
+  - Provides Query API `provides-query-api` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Blockfrost-Compatible API `blockfrost-compat-api` — **untested**
+- Depends on: yaci-store
+- Used by: mesh, pycardano, cardano-client-lib
+
+Yaci DevKit provides a complete local Cardano development environment that can be created and destroyed in seconds. It runs a local Cardano node, the Yaci Store indexer, and a web-based block viewer. It supports sub-second block times (down to 100ms) for ultra-fast iteration. Crucially, it exposes Blockfrost-compatible API endpoints, meaning any SDK configured for Blockfrost can connect to Yaci DevKit by just changing the provider URL to localhost — zero code changes required. Available as Docker Compose, ZIP distribution, or NPM package ('npm install -g @bloxbean/yaci-devkit'). It also integrates Ogmios and Kupo for SDKs that use those backends. Yaci DevKit supports rollback testing via multi-node setups, configurable genesis parameters, and address top-up via CLI or admin API. Built by the same BloxBean team behind Cardano Client Lib and Yaci Store.
+
+#### Yaci Cardano Test — `yaci-cardano-test` · active
+Java testing library with testcontainers for automated Cardano testing
+
+- Website: https://github.com/bloxbean/yaci-cardano-test · Repo: https://github.com/bloxbean/yaci-cardano-test
+- Languages: Java
+- Health: healthy · latest 0.10.9 · released 2024-12-07 · 7222★
+- Features:
+  - Local Development Network `local-devnet` — **untested**
+- Depends on: cardano-client-lib, yaci-devkit
+
+Yaci Cardano Test is a Java library that provides programmatic Cardano testing using testcontainers. It starts a Yaci DevKit container in Docker programmatically, funds test addresses, and provides Cardano-specific JUnit 5 assertions. It integrates with Cardano Client Lib for transaction building. The Yaci Store API (Blockfrost-compatible or Ogmios mode) is accessible from test code.
+
+#### Mockfrost — `mockfrost` · experimental
+Mock Blockfrost API for Python smart contract testing
+
+- Website: https://github.com/OpShin/mockfrost · Repo: https://github.com/OpShin/mockfrost
+- Languages: Python
+- Health: healthy · latest 1.3.4 · released 2024-12-14 · 995★
+- Features:
+  - Local Development Network `local-devnet` — **untested**
+  - Provides Query API `provides-query-api` — **untested**
+- Depends on: pycardano
+
+Mockfrost (formerly Plutus Bench) creates a mock ledger with an arbitrary UTxO set and hosts a mock Blockfrost API for testing. It supports PyCardano and other tools that use the Blockfrost API format. Currently in beta. Useful for unit testing smart contract interactions without a real devnet.
+
+### Layer 2 & Scalability
+
+#### Hydra Head — `hydra` · production
+Layer 2 isomorphic state channels for Cardano — near-instant transactions
+
+- Website: https://hydra.family · Repo: https://github.com/cardano-scaling/hydra
+- Languages: Haskell
+- Health: healthy · latest 3.6.2 · released 2025-05-25 · 2233★
+- Features:
+  - Layer 2 Scaling `layer-2-scaling` — **untested**
+  - Builds Transactions `builds-transactions` — **untested**
+  - Submits Transactions `submits-transactions` — **untested**
+  - Connects to Node `connects-to-node` — **untested**
+- Depends on: cardano-node
+- Used by: mesh
+
+Hydra is Cardano's primary Layer 2 scaling solution, using isomorphic state channels called 'Hydra Heads.' Each head is an off-chain mini-ledger shared between a small group of participants where transactions are near-instant and low-cost. The isomorphic design means Hydra Heads support the same features as Cardano mainnet — native tokens, NFTs, and Plutus smart contracts work in a head without modification. The final state is settled on the main chain. Hydra has been on mainnet since May 2023 (version 0.10.0+). Mesh SDK has a beta Hydra provider. Hydra is ideal for high-throughput use cases: gaming, micropayments, auctions, point-of-sale, and collaborative tools. It achieves linear scalability — each new head adds capacity.
+
+### Oracles & Off-Chain Data Feeds
+
+#### Charli3 — `charli3` · production
+Decentralized oracle network for Cardano with inter-node vetoing
+
+- Website: https://charli3.io · Repo: https://github.com/niccokunzmann/charli3
+- Languages: Haskell
+- Health: healthy · latest 1.3.11 · released 2025-03-28 · 1851★
+- Features:
+  - Oracle / Off-Chain Data Feed `oracle-data-feed` — **untested**
+- Depends on: cardano-node
+
+Charli3 is an open-source, decentralized network of oracles purpose-built for Cardano. It brings off-chain data (prices, events, etc.) onto the blockchain using inter-node vetoing to ensure data accuracy. Charli3 provides the Python SDK 'charli3-dendrite' for DeFi developers to interact with multiple Cardano DEXs using data from Charli3 oracles.
+
+#### Orcfax — `orcfax` · production
+Decentralized Cardano oracle publishing real-world data for smart contracts
+
+- Website: https://orcfax.io · Repo: https://github.com/orcfax
+- Languages: Various
+- Health: healthy · latest 0.10.14 · released 2025-02-05 · 7842★
+- Features:
+  - Oracle / Off-Chain Data Feed `oracle-data-feed` — **untested**
+- Depends on: cardano-node
+
+Orcfax is a decentralized oracle for Cardano that publishes authenticated real-world data for smart contracts. It focuses on data provenance and auditability — each data point includes a full audit trail. Orcfax is an alternative to Charli3 with a different approach to data sourcing and verification.
+
+### NFT & Token Tooling
+
+#### NMKR Studio — `nmkr-studio` · production
+Comprehensive platform for Cardano NFT minting, burning, and management
+
+- Website: https://www.nft-maker.io · Repo: https://github.com/nftmakerio/NMKR-Studio
+- Languages: C#, .NET
+- Health: healthy · latest 1.5.11 · released 2025-03-20 · 139★
+- Features:
+  - Mints Native Tokens/NFTs `mints-tokens` — **untested**
+
+NMKR Studio is a comprehensive platform for Cardano NFT management built with C# and .NET. It provides backend tools and services for minting, burning, and managing NFTs. It offers white-label solutions for brands, companies, and creators. NMKR handles the infrastructure complexity so creators can focus on content. It includes APIs for programmatic access and a web dashboard for no-code NFT management.
+
+### BaaS & Cloud Platforms
+
+#### Demeter.run — `demeter-run` · production
+Cloud platform with managed Cardano infrastructure for dApp development
+
+- Website: https://demeter.run
+- Languages: Cloud
+- Health: healthy · latest 0.7.5 · released 2025-04-30 · 1678★
+- Features:
+  - Local Development Network `local-devnet` — **untested**
+  - Provides Query API `provides-query-api` — **untested**
+  - Connects to Node `connects-to-node` — **untested**
+
+Demeter.run is a cloud-based platform by TxPipe equipped with all necessary resources for building Cardano dApps. It provides managed Cardano nodes, Ogmios instances, Kupo instances, and development environments accessible via a web browser. It offers extensions that you can add to your project (Ogmios, Kupo, DB Sync, etc.) without managing any infrastructure. The OpShin starter kit can be opened directly in Demeter.run for instant development.
+
+### Plutus Utilities & Optimization
+
+#### Plutonomy — `plutonomy` · active
+Optimizer for Untyped Plutus Core — reduce script size and execution costs
+
+- Website: https://github.com/well-typed/plutonomy · Repo: https://github.com/well-typed/plutonomy
+- Languages: Haskell
+- Health: healthy · latest 0.3.13 · released 2025-01-12 · 7426★
+- Features:
+  - Formal Verification / Optimization `formal-verification` — **untested**
+- Used by: plinth, plutarch
+
+Plutonomy is an optimizer for Untyped Plutus Core (UPLC) that can be plugged into any Plutus compilation pipeline as an extra pass. It applies various optimization strategies to reduce script size and execution costs. There is also a CLI wrapper (plutonomy-cli) for command-line usage. Relevant for Plinth and Plutarch users who want to optimize their compiled UPLC before deployment.
+
+#### Liqwid-libs — `liqwid-libs` · active
+Plutarch helper libraries for advanced Plutus smart contract development
+
+- Website: https://github.com/Liqwid-Labs/liqwid-libs · Repo: https://github.com/Liqwid-Labs/liqwid-libs
+- Languages: Haskell
+- Health: healthy · latest 2.4.1 · released 2025-05-02 · 1036★
+- Features:
+  - Formal Verification / Optimization `formal-verification` — **untested**
+- Depends on: plutarch
+
+Liqwid-libs is a monorepo of Plutarch helper libraries maintained by Liqwid Labs. It provides reusable patterns, utility functions, and abstractions for building complex Plutus smart contracts using the Plutarch eDSL. Used in production by the Liqwid lending protocol.
+
+### Data Analytics & Explorers
+
+#### Cardanoscan — `cardanoscan` · production
+Feature-rich Cardano blockchain explorer and analytics platform
+
+- Website: https://cardanoscan.io
+- Languages: Web
+- Health: healthy · latest 1.3.15 · released 2025-05-15 · 9423★
+
+Cardanoscan is a feature-rich blockchain explorer and analytics platform for Cardano. It provides detailed information about transactions, addresses, tokens, NFTs, stake pools, governance actions, and smart contract interactions. It supports both mainnet and testnets. It is the most commonly recommended explorer for debugging transactions during development and monitoring in production.
+
+#### Cexplorer — `cexplorer` · production
+The oldest and most featured explorer on the Cardano network
+
+- Website: https://cexplorer.io
+- Languages: Web
+- Health: healthy · latest 2.6.14 · released 2025-02-19 · 2608★
+
+Cexplorer (formerly AdaPools) is the oldest and most featured explorer on the Cardano network. It provides comprehensive analytics on governance, pools, tokens, transactions, and network health. Particularly strong for stake pool analytics and governance tracking.
+
+---
+
+Data is editable JSON at https://github.com/cardano-community/cardano-toolcheck. Health and test results are produced by scheduled CI.
