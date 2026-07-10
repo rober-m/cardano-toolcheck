@@ -1,0 +1,160 @@
+name: Feature Tests
+
+# Verifies that each tool's advertised features actually work, and grades the
+# home-page matrix. Split into small jobs so only tools whose tests or catalog
+# entry changed are re-run — unrelated PRs cost nothing.
+on:
+  pull_request:
+    paths:
+      - "tests/**"
+      - "data/tools.json"
+      - "scripts/test-check.ts"
+      - "scripts/test-parsers.ts"
+      - "scripts/test-runners/**"
+      - "scripts/combine-test-results.ts"
+      - "scripts/detect-changed-tools.ts"
+  push:
+    branches: [main]
+    paths:
+      - "tests/**"
+      - "data/tools.json"
+      - "scripts/**"
+  schedule:
+    - cron: "0 4 * * 1" # weekly full run, Monday 04:00 UTC
+  workflow_dispatch:
+    inputs:
+      tools:
+        description: "Comma-separated tool ids, or 'all'"
+        required: false
+        default: "all"
+
+permissions:
+  contents: write
+
+jobs:
+  # ── Stage 1: work out which tools to run, as two dynamic matrices ──
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      offline_tools: ${{ steps.set.outputs.offline_tools }}
+      devnet_tools: ${{ steps.set.outputs.devnet_tools }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # need base commit for the diff
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - id: set
+        run: npx tsx scripts/detect-changed-tools.ts
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          DISPATCH_TOOLS: ${{ github.event.inputs.tools }}
+
+  # ── Stage 2: offline tests — one cheap job per changed tool, no Docker ──
+  test-offline:
+    needs: detect
+    if: needs.detect.outputs.offline_tools != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.detect.outputs.offline_tools) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+
+      # Toolchain setup, gated on the tool's ecosystem.
+      - if: matrix.ecosystem == 'aiken'
+        uses: aiken-lang/setup-aiken@v1
+        with:
+          version: v1.1.22
+      - if: matrix.ecosystem == 'pytest'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - if: matrix.ecosystem == 'cargo'
+        uses: dtolnay/rust-toolchain@stable
+      - if: matrix.ecosystem == 'jvm'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Run offline tests
+        run: npx tsx scripts/test-check.ts --tools ${{ matrix.tool }} --depth offline
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: result-${{ matrix.tool }}
+          path: data/test-results/${{ matrix.tool }}.json
+          if-no-files-found: error
+
+  # ── Stage 2b: devnet tests — isolated, brings up a Dockerized Yaci devnet ──
+  test-devnet:
+    needs: detect
+    if: needs.detect.outputs.devnet_tools != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.detect.outputs.devnet_tools) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+
+      - if: matrix.ecosystem == 'pytest'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Start local devnet
+        run: docker compose -f tests/_devnet/compose.yml up -d
+      - name: Wait for devnet
+        run: ./tests/_devnet/wait-ready.sh
+
+      - name: Run devnet tests
+        run: npx tsx scripts/test-check.ts --tools ${{ matrix.tool }} --depth devnet
+        env:
+          TEST_DEVNET: "1"
+
+      - name: Stop devnet
+        if: always()
+        run: docker compose -f tests/_devnet/compose.yml down -v
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: result-${{ matrix.tool }}-devnet
+          path: data/test-results/${{ matrix.tool }}.json
+          if-no-files-found: error
+
+  # ── Stage 3: merge per-tool results and commit (only off-PR) ──
+  aggregate:
+    needs: [detect, test-offline, test-devnet]
+    if: always() && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          path: _artifacts
+          pattern: result-*
+      # Merge downloaded artifacts into data/test-results/, then regenerate the
+      # aggregate file from ALL committed per-tool files (unchanged tools persist).
+      - run: npx tsx scripts/combine-test-results.ts --from _artifacts
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update feature-test results"
+          file_pattern: "data/test-results.json data/test-results/*.json"

@@ -1,0 +1,17 @@
+name = "navigator/aiken"
+version = "0.0.0"
+compiler = "v1.1.22"
+plutus = "v3"
+
+# Minimal Aiken project used by the feature-test harness to verify that Aiken
+# actually compiles to UPLC, emits a CIP-57 blueprint, and runs test blocks.
+
+[repository]
+user = "navigator"
+project = "aiken"
+platform = "github"
+
+[[dependencies]]
+name = "aiken-lang/stdlib"
+version = "v2"
+source = "github"

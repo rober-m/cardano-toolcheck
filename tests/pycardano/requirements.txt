@@ -1,0 +1,5 @@
+pycardano
+# cbor2 5.7+ drops CBORDecodeValueError which pycardano's cbor2pure fallback imports.
+cbor2==5.6.5
+pytest
+pytest-json-report

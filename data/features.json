@@ -1,0 +1,38 @@
+[
+  { "id": "compiles-to-uplc", "label": "Compiles to UPLC", "short": "UPLC", "group": "on-chain", "description": "Compiles high-level code to Untyped Plutus Core, Cardano's on-chain execution language." },
+  { "id": "generates-blueprint", "label": "Generates CIP-57 Blueprint", "short": "Blueprint", "group": "on-chain", "description": "Produces a plutus.json blueprint file (CIP-57) that off-chain tools can consume to build transactions targeting this contract." },
+  { "id": "plutus-v3", "label": "Plutus V3 Support", "short": "Plutus V3", "group": "on-chain", "description": "Supports the latest Plutus V3 script version with Conway-era features." },
+  { "id": "native-scripts", "label": "Native Script Support", "short": "Native Scripts", "group": "on-chain", "description": "Supports Cardano native scripts (multi-sig, time-lock) which don't require Plutus." },
+  { "id": "property-based-testing", "label": "Built-in Testing Framework", "short": "Testing", "group": "on-chain", "description": "Includes a built-in test runner for unit and/or property-based testing of on-chain logic." },
+  { "id": "lsp-support", "label": "Editor/LSP Support", "short": "LSP", "group": "on-chain", "description": "Provides a Language Server Protocol implementation for IDE integration (autocomplete, type checking, go-to-definition)." },
+  { "id": "package-manager", "label": "Package Manager", "short": "Pkg Mgr", "group": "on-chain", "description": "Includes a package manager for importing and versioning on-chain library dependencies." },
+
+  { "id": "builds-transactions", "label": "Builds Transactions", "short": "Build Tx", "group": "off-chain", "description": "Constructs Cardano transactions programmatically: outputs, inputs, scripts, metadata, validity intervals." },
+  { "id": "signs-transactions", "label": "Signs Transactions", "short": "Sign Tx", "group": "off-chain", "description": "Signs transactions using private keys, mnemonics, or hardware wallets." },
+  { "id": "submits-transactions", "label": "Submits Transactions", "short": "Submit Tx", "group": "off-chain", "description": "Submits signed transactions to the Cardano network for inclusion in a block." },
+  { "id": "queries-utxos", "label": "Queries UTxOs", "short": "Query UTxO", "group": "off-chain", "description": "Retrieves the current UTxO set for addresses, allowing the SDK to know what's available to spend." },
+  { "id": "coin-selection", "label": "Coin Selection", "short": "Coin Select", "group": "off-chain", "description": "Automatically selects which UTxOs to use as inputs to cover transaction outputs and fees." },
+  { "id": "fee-estimation", "label": "Fee Estimation", "short": "Fees", "group": "off-chain", "description": "Calculates transaction fees based on current protocol parameters and transaction size." },
+  { "id": "mints-tokens", "label": "Mints Native Tokens/NFTs", "short": "Mint", "group": "off-chain", "description": "Provides helpers for minting native tokens and NFTs on Cardano." },
+  { "id": "reads-blueprint", "label": "Reads CIP-57 Blueprints", "short": "Read BP", "group": "off-chain", "description": "Can load and parse a CIP-57 plutus.json blueprint to interact with compiled smart contracts." },
+  { "id": "script-evaluation", "label": "Evaluates Plutus Scripts", "short": "Eval Script", "group": "off-chain", "description": "Can evaluate Plutus scripts locally to estimate execution units before submitting." },
+
+  { "id": "cip-30", "label": "CIP-30 Wallet Connector", "short": "CIP-30", "group": "wallet", "description": "Connects to Cardano browser wallets (Eternl, Lace, NuFi, Yoroi, Begin) via the CIP-30 dApp connector standard." },
+  { "id": "cip-95", "label": "CIP-95 Governance Bridge", "short": "CIP-95", "group": "wallet", "description": "Extends CIP-30 with governance features: DRep registration, delegation, voting." },
+  { "id": "hardware-wallet", "label": "Hardware Wallet Support", "short": "HW Wallet", "group": "wallet", "description": "Supports signing with Ledger, Trezor, or other hardware wallets." },
+
+  { "id": "cbor-serialization", "label": "CBOR Serialization", "short": "CBOR", "group": "low-level", "description": "Encodes/decodes Cardano data structures to/from CBOR binary format." },
+  { "id": "ouroboros-miniprotocols", "label": "Ouroboros Mini-Protocols", "short": "Mini-Protocols", "group": "low-level", "description": "Implements Cardano's Ouroboros network protocols for direct node communication." },
+
+  { "id": "indexes-chain", "label": "Indexes Chain Data", "short": "Index", "group": "infrastructure", "description": "Follows the Cardano chain and stores structured data in a queryable database." },
+  { "id": "provides-query-api", "label": "Provides Query API", "short": "Query API", "group": "infrastructure", "description": "Exposes an API (REST, GraphQL, gRPC) for querying blockchain state." },
+  { "id": "connects-to-node", "label": "Connects to Node", "short": "Node Conn.", "group": "infrastructure", "description": "Connects directly to a Cardano node via Ouroboros protocols or local socket." },
+  { "id": "local-devnet", "label": "Local Development Network", "short": "Devnet", "group": "infrastructure", "description": "Provides a local, private Cardano network for development and testing." },
+  { "id": "blockfrost-compat-api", "label": "Blockfrost-Compatible API", "short": "BF API", "group": "infrastructure", "description": "Exposes API endpoints compatible with the Blockfrost API format, allowing SDK provider reuse." },
+
+  { "id": "layer-2-scaling", "label": "Layer 2 Scaling", "short": "L2", "group": "scalability", "description": "Processes transactions off-chain in state channels or sidechains for higher throughput." },
+
+  { "id": "oracle-data-feed", "label": "Oracle / Off-Chain Data Feed", "short": "Oracle", "group": "data", "description": "Provides real-world data to on-chain smart contracts." },
+
+  { "id": "formal-verification", "label": "Formal Verification / Optimization", "short": "Formal V.", "group": "quality", "description": "Tools for proving smart contract correctness or optimizing UPLC bytecode." }
+]

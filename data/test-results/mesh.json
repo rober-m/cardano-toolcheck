@@ -1,0 +1,51 @@
+{
+  "toolId": "mesh",
+  "lastRun": "2026-07-10T08:44:42.561Z",
+  "depthsRun": [
+    "offline"
+  ],
+  "tests": [
+    {
+      "id": "submit-tx",
+      "features": [
+        "submits-transactions",
+        "queries-utxos"
+      ],
+      "depth": "devnet",
+      "status": "skip",
+      "detail": "devnet not enabled (TEST_DEVNET unset)"
+    },
+    {
+      "id": "builds-tx",
+      "features": [
+        "builds-transactions",
+        "coin-selection",
+        "fee-estimation"
+      ],
+      "depth": "offline",
+      "status": "pass",
+      "detail": "1 case(s) passed for \"builds and balances a transaction\"",
+      "durationMs": 1639
+    },
+    {
+      "id": "signs-tx",
+      "features": [
+        "signs-transactions"
+      ],
+      "depth": "offline",
+      "status": "pass",
+      "detail": "1 case(s) passed for \"signs a transaction\"",
+      "durationMs": 1639
+    },
+    {
+      "id": "cbor",
+      "features": [
+        "cbor-serialization"
+      ],
+      "depth": "offline",
+      "status": "pass",
+      "detail": "1 case(s) passed for \"serializes and deserializes an address\"",
+      "durationMs": 1639
+    }
+  ]
+}

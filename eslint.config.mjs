@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Language-specific test fixtures (Python/Rust/Aiken + per-project package.json)
+    // are not part of the Next/TS app and must not be linted or type-checked.
+    "tests/**",
+    "scripts/**",
   ]),
 ]);
 

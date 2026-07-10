@@ -1,0 +1,32 @@
+{
+  "toolId": "pycardano",
+  "ecosystem": "pytest",
+  "runner": {
+    "install": "python3 -m venv .venv && .venv/bin/pip install -q -r requirements.txt",
+    "command": ".venv/bin/pytest --json-report --json-report-file=.report.json -q >/dev/null 2>&1; cat .report.json",
+    "resultFormat": "pytest-json"
+  },
+  "tests": [
+    {
+      "id": "builds-tx",
+      "features": ["builds-transactions", "coin-selection", "fee-estimation"],
+      "depth": "offline",
+      "match": "test_builds_and_balances_transaction",
+      "description": "TransactionBuilder selects inputs and estimates a fee offline"
+    },
+    {
+      "id": "signs-tx",
+      "features": ["signs-transactions"],
+      "depth": "offline",
+      "match": "test_signs_transaction",
+      "description": "A payment key produces an Ed25519 signature"
+    },
+    {
+      "id": "cbor",
+      "features": ["cbor-serialization"],
+      "depth": "offline",
+      "match": "test_cbor_roundtrip",
+      "description": "A TransactionOutput round-trips through CBOR"
+    }
+  ]
+}

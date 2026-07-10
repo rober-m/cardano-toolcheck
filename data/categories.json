@@ -1,0 +1,128 @@
+[
+  {
+    "id": "smart-contract-language",
+    "name": "Smart Contract Languages",
+    "icon": "📜",
+    "color": "#E94560",
+    "description": "Languages that compile to Untyped Plutus Core (UPLC) for on-chain validator scripts.",
+    "llmContext": "Cardano executes smart contracts as UPLC (Untyped Plutus Core) scripts. Multiple high-level languages compile to UPLC. The developer chooses one language for on-chain logic and a separate off-chain SDK for transaction building. This is different from Ethereum where Solidity handles both concerns.",
+    "order": 1
+  },
+  {
+    "id": "off-chain-sdk",
+    "name": "Off-Chain SDKs & Transaction Builders",
+    "icon": "🧰",
+    "color": "#3498db",
+    "description": "Libraries for building transactions, integrating wallets, and interacting with the chain.",
+    "llmContext": "Off-chain SDKs handle everything that is NOT executed on-chain: building transactions, selecting UTxOs, calculating fees, signing, submitting, connecting to browser wallets (CIP-30), and querying blockchain state via providers. Every Cardano dApp needs one. They are pluggable: each SDK supports multiple backend providers (Blockfrost, Koios, Maestro, Ogmios, etc.) via an adapter/provider pattern.",
+    "order": 2
+  },
+  {
+    "id": "serialization-library",
+    "name": "Serialization & Low-Level Libraries",
+    "icon": "🔧",
+    "color": "#9b59b6",
+    "description": "Low-level CBOR encoding, protocol reimplementations, and foundational codec libraries.",
+    "llmContext": "These are foundational libraries that most developers do NOT use directly. Off-chain SDKs use them internally. Only reach for these if you're building your own SDK, wallet, or infrastructure tool, or need fine-grained control over CBOR serialization.",
+    "order": 3
+  },
+  {
+    "id": "api-provider",
+    "name": "API Providers",
+    "icon": "🌐",
+    "color": "#1abc9c",
+    "description": "Hosted REST/GraphQL APIs that abstract direct node interaction.",
+    "llmContext": "API providers let developers query blockchain data and submit transactions without running their own Cardano node. They are plugged into off-chain SDKs as 'providers' or 'backends'. Most have free tiers. Choosing a provider is one of the first decisions a new developer makes.",
+    "order": 4
+  },
+  {
+    "id": "node-and-access",
+    "name": "Node & Direct Chain Access",
+    "icon": "🖧",
+    "color": "#e67e22",
+    "description": "Node software, bridges, and direct chain-access interfaces.",
+    "llmContext": "These tools connect directly to the Cardano node using Ouroboros mini-protocols. Most dApp developers do NOT need to run a node or use these directly — they use API providers instead. Node-level tools are for infrastructure operators, protocol developers, and advanced setups (self-hosted backends, custom indexing).",
+    "order": 5
+  },
+  {
+    "id": "indexer",
+    "name": "Chain Indexers",
+    "icon": "🗂️",
+    "color": "#2ecc71",
+    "description": "Follow the chain and store structured, queryable blockchain data.",
+    "llmContext": "Indexers follow the blockchain and store data in a database (PostgreSQL, SQLite, etc.) for efficient querying. Most dApp developers use indexers indirectly via API providers (Blockfrost uses DB Sync, Maestro has its own indexer, etc.). You'd run your own indexer only if you need custom queries, real-time event streaming, or want to avoid third-party dependencies.",
+    "order": 6
+  },
+  {
+    "id": "dev-environment",
+    "name": "Local Development & Testing",
+    "icon": "🧪",
+    "color": "#f39c12",
+    "description": "Local devnets, testing frameworks, and emulators for rapid iteration.",
+    "llmContext": "Local development tools let you spin up a private Cardano network on your machine for testing without spending real ADA or waiting for testnet block confirmations. Essential for CI/CD pipelines and rapid iteration. The main tool is Yaci DevKit, which provides a full local devnet with a built-in indexer.",
+    "order": 7
+  },
+  {
+    "id": "layer-2",
+    "name": "Layer 2 & Scalability",
+    "icon": "⚡",
+    "color": "#8e44ad",
+    "description": "Off-chain scaling protocols extending Cardano's throughput.",
+    "llmContext": "Layer 2 solutions process transactions off-chain while settling on Cardano mainnet. Hydra is the primary L2, using isomorphic state channels. Most dApps do NOT need L2 initially — it's relevant for high-throughput use cases like gaming, micropayments, or auctions. Mithril is for fast node sync, not dApp scaling per se.",
+    "order": 8
+  },
+  {
+    "id": "wallet-integration",
+    "name": "Wallet Integration & CIP Standards",
+    "icon": "👛",
+    "color": "#9b59b6",
+    "description": "Libraries for connecting dApps to browser wallets and signing transactions.",
+    "llmContext": "Most off-chain SDKs (Mesh, Lucid Evolution, Blaze) include wallet integration built-in via CIP-30. The tools in this category are standalone wallet connectors or helper libraries for projects that need wallet connectivity without a full SDK.",
+    "order": 9
+  },
+  {
+    "id": "oracle",
+    "name": "Oracles & Off-Chain Data Feeds",
+    "icon": "🔮",
+    "color": "#d35400",
+    "description": "Oracle networks bringing real-world data to on-chain smart contracts.",
+    "llmContext": "Oracles provide off-chain data (prices, weather, sports scores, etc.) to on-chain smart contracts. You need an oracle if your smart contract must make decisions based on real-world information. DeFi protocols almost always need price oracles. Simple dApps (NFTs, governance voting) usually do not.",
+    "order": 10
+  },
+  {
+    "id": "nft-token-tooling",
+    "name": "NFT & Token Tooling",
+    "icon": "🎨",
+    "color": "#16213E",
+    "description": "Platforms and libraries for minting and managing NFTs and native tokens.",
+    "llmContext": "Cardano supports native tokens at the ledger level (no smart contract needed for basic minting). These tools provide higher-level interfaces for NFT/token creation, management, and distribution. Most off-chain SDKs also have built-in minting support, so standalone NFT tools are mainly useful for no-code/low-code workflows or specialized features (bulk minting, whitelisting, etc.).",
+    "order": 11
+  },
+  {
+    "id": "baas-platform",
+    "name": "BaaS & Cloud Platforms",
+    "icon": "☁️",
+    "color": "#0F3460",
+    "description": "Backend-as-a-Service and managed environments for Cardano development.",
+    "llmContext": "These platforms provide managed Cardano infrastructure so developers don't need to run or configure anything locally. Useful for quick prototyping, hackathons, or teams that want to avoid infrastructure management.",
+    "order": 12
+  },
+  {
+    "id": "plutus-utilities",
+    "name": "Plutus Utilities & Optimization",
+    "icon": "⚙️",
+    "color": "#7f8c8d",
+    "description": "Helper libraries, optimizers, and formal verification for Plutus smart contracts.",
+    "llmContext": "Advanced tools for optimizing UPLC bytecode size, improving script execution costs, or formally verifying contract correctness. Only relevant once you have a working smart contract and need to optimize it for production.",
+    "order": 13
+  },
+  {
+    "id": "explorer-analytics",
+    "name": "Data Analytics & Explorers",
+    "icon": "📊",
+    "color": "#E94560",
+    "description": "Block explorers and analytics platforms.",
+    "llmContext": "Explorers let developers inspect transactions, addresses, tokens, and smart contract interactions on Cardano. Essential for debugging during development and monitoring in production. Not a build dependency — you use them via a browser.",
+    "order": 14
+  }
+]

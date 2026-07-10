@@ -1,0 +1,31 @@
+{
+  "sdkProviderMatrix": {
+    "mesh":            { "blockfrost": true, "koios": true, "maestro": true, "ogmios": true, "utxo-rpc": true, "yaci-devkit": true, "hydra": "beta" },
+    "lucid-evolution":  { "blockfrost": true, "koios": true, "maestro": true, "ogmios": true, "utxo-rpc": false, "yaci-devkit": true, "hydra": false },
+    "blaze":           { "blockfrost": true, "koios": false, "maestro": true, "ogmios": true, "utxo-rpc": true, "yaci-devkit": false, "hydra": false },
+    "pycardano":       { "blockfrost": true, "koios": false, "maestro": false, "ogmios": true, "utxo-rpc": false, "yaci-devkit": true, "hydra": false },
+    "cardano-client-lib": { "blockfrost": true, "koios": true, "maestro": false, "ogmios": true, "utxo-rpc": false, "yaci-devkit": true, "hydra": false },
+    "cardano-js-sdk":  { "blockfrost": true, "koios": false, "maestro": false, "ogmios": true, "utxo-rpc": false, "yaci-devkit": false, "hydra": false },
+    "cardanosharp":    { "blockfrost": true, "koios": true, "maestro": false, "ogmios": false, "utxo-rpc": false, "yaci-devkit": false, "hydra": false },
+    "ctl":             { "blockfrost": false, "koios": false, "maestro": false, "ogmios": true, "utxo-rpc": false, "yaci-devkit": false, "hydra": false },
+    "atlas":           { "blockfrost": false, "koios": false, "maestro": true, "ogmios": true, "utxo-rpc": false, "yaci-devkit": false, "hydra": false }
+  },
+
+  "sdkLanguageMatrix": {
+    "mesh":            { "aiken": true, "plinth": true, "opshin": false, "plutarch": true, "plu-ts": false, "scalus": false, "helios": false, "marlowe": false },
+    "lucid-evolution":  { "aiken": true, "plinth": true, "opshin": false, "plutarch": true, "plu-ts": false, "scalus": false, "helios": true, "marlowe": false },
+    "blaze":           { "aiken": true, "plinth": true, "opshin": false, "plutarch": true, "plu-ts": false, "scalus": false, "helios": false, "marlowe": false },
+    "pycardano":       { "aiken": true, "plinth": true, "opshin": true, "plutarch": true, "plu-ts": false, "scalus": false, "helios": false, "marlowe": false },
+    "cardano-client-lib": { "aiken": true, "plinth": true, "opshin": false, "plutarch": true, "plu-ts": false, "scalus": false, "helios": false, "marlowe": false }
+  },
+
+  "notes": [
+    { "sdk": "blaze", "provider": "koios", "note": "Not built-in. Community provider may exist but is not officially supported." },
+    { "sdk": "blaze", "provider": "ogmios", "note": "Via built-in 'Kupmios' provider which combines Ogmios (tx eval/submit) + Kupo (UTxO queries)." },
+    { "sdk": "pycardano", "provider": "ogmios", "note": "Via OgmiosChainContext. Kupo can be added via KupoChainContextExtension for UTxO pattern matching." },
+    { "sdk": "pycardano", "provider": "yaci-devkit", "note": "Via pccontext library's YaciDevkitChainContext." },
+    { "sdk": "mesh", "provider": "hydra", "note": "Beta provider. Connects to Hydra Head for L2 transaction building." },
+    { "sdk": "pycardano", "smart-contract": "opshin", "note": "OpShin's primary off-chain partner. OpShin contracts are built and loaded directly as PyCardano PlutusV3Script objects." },
+    { "sdk": "all", "smart-contract": "all", "note": "Any SDK can load any compiled UPLC/blueprint — the matrix shows officially tested and documented pairings." }
+  ]
+}

@@ -1,0 +1,23 @@
+name: Tool Health Checks
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Weekly on Monday 06:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npx tsx scripts/health-check.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update tool health results"
+          file_pattern: "data/health-results.json"

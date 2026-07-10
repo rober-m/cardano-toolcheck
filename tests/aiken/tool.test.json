@@ -1,0 +1,32 @@
+{
+  "toolId": "aiken",
+  "ecosystem": "aiken",
+  "runner": {
+    "install": "aiken --version",
+    "command": "aiken check",
+    "resultFormat": "aiken-json"
+  },
+  "tests": [
+    {
+      "id": "compiles-to-uplc",
+      "features": ["compiles-to-uplc"],
+      "depth": "offline",
+      "match": "build",
+      "description": "aiken build lowers the validator to Untyped Plutus Core"
+    },
+    {
+      "id": "generates-blueprint",
+      "features": ["generates-blueprint"],
+      "depth": "offline",
+      "match": "blueprint",
+      "description": "aiken build emits a CIP-57 plutus.json with the validator"
+    },
+    {
+      "id": "runs-tests",
+      "features": ["property-based-testing"],
+      "depth": "offline",
+      "match": "test:arithmetic",
+      "description": "aiken check runs and passes an in-language test block"
+    }
+  ]
+}

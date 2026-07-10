@@ -1,0 +1,39 @@
+{
+  "toolId": "mesh",
+  "ecosystem": "node",
+  "runner": {
+    "install": "npm ci",
+    "command": "npx vitest run --reporter=json",
+    "resultFormat": "vitest-json"
+  },
+  "tests": [
+    {
+      "id": "builds-tx",
+      "features": ["builds-transactions", "coin-selection", "fee-estimation"],
+      "depth": "offline",
+      "match": "builds and balances a transaction",
+      "description": "Builds and balances a tx offline via MeshTxBuilder + OfflineFetcher"
+    },
+    {
+      "id": "signs-tx",
+      "features": ["signs-transactions"],
+      "depth": "offline",
+      "match": "signs a transaction",
+      "description": "Signs an unsigned tx with a MeshWallet key"
+    },
+    {
+      "id": "cbor",
+      "features": ["cbor-serialization"],
+      "depth": "offline",
+      "match": "serializes and deserializes an address",
+      "description": "Round-trips an address through Mesh's serialization"
+    },
+    {
+      "id": "submit-tx",
+      "features": ["submits-transactions", "queries-utxos"],
+      "depth": "devnet",
+      "match": "submits a transaction to the local devnet",
+      "description": "Funds an address, submits a tx to the Yaci devnet, and reads its UTxOs back"
+    }
+  ]
+}

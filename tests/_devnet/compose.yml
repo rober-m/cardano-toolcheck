@@ -1,0 +1,25 @@
+# Shared local Cardano devnet for devnet-depth feature tests, powered by
+# Yaci DevKit (https://github.com/bloxbean/yaci-devkit). One instant devnet plus:
+#   - a Yaci Store API (Blockfrost-compatible) on :8080  — SDK provider target
+#   - a devkit admin/faucet API on :10000                — fund test addresses
+#
+# Started by the `test-devnet` CI job (and locally via
+# `docker compose -f tests/_devnet/compose.yml up -d`). Pin the image tag when a
+# reproducible devnet is needed; `latest` tracks the current DevKit release.
+services:
+  yaci-devkit:
+    image: bloxbean/yaci-devkit:latest
+    # Create and start a single-node devnet non-interactively.
+    command: ["create-node", "-o", "--start"]
+    ports:
+      - "8080:8080" # Yaci Store REST API (Blockfrost-compatible)
+      - "10000:10000" # DevKit admin + faucet API
+      - "3001:3001" # node submit/n2c
+    environment:
+      # Instant block production so tests don't wait on real slot timing.
+      YACI_DEVKIT_BLOCK_TIME: "1"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/api/v1/blocks/latest || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 40

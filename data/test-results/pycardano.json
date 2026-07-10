@@ -1,0 +1,41 @@
+{
+  "toolId": "pycardano",
+  "lastRun": "2026-07-10T08:44:46.197Z",
+  "depthsRun": [
+    "offline"
+  ],
+  "tests": [
+    {
+      "id": "builds-tx",
+      "features": [
+        "builds-transactions",
+        "coin-selection",
+        "fee-estimation"
+      ],
+      "depth": "offline",
+      "status": "pass",
+      "detail": "1 case(s) passed for \"test_builds_and_balances_transaction\"",
+      "durationMs": 1568
+    },
+    {
+      "id": "signs-tx",
+      "features": [
+        "signs-transactions"
+      ],
+      "depth": "offline",
+      "status": "pass",
+      "detail": "1 case(s) passed for \"test_signs_transaction\"",
+      "durationMs": 1568
+    },
+    {
+      "id": "cbor",
+      "features": [
+        "cbor-serialization"
+      ],
+      "depth": "offline",
+      "status": "pass",
+      "detail": "1 case(s) passed for \"test_cbor_roundtrip\"",
+      "durationMs": 1568
+    }
+  ]
+}

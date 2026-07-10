@@ -1,0 +1,36 @@
+{
+  "toolId": "aiken",
+  "lastRun": "2026-07-10T08:44:37.766Z",
+  "depthsRun": [
+    "offline"
+  ],
+  "tests": [
+    {
+      "id": "compiles-to-uplc",
+      "features": [
+        "compiles-to-uplc"
+      ],
+      "depth": "offline",
+      "status": "pass",
+      "detail": "aiken build compiled 2 validator(s) to UPLC"
+    },
+    {
+      "id": "generates-blueprint",
+      "features": [
+        "generates-blueprint"
+      ],
+      "depth": "offline",
+      "status": "pass",
+      "detail": "plutus.json blueprint has 2 validator(s)"
+    },
+    {
+      "id": "runs-tests",
+      "features": [
+        "property-based-testing"
+      ],
+      "depth": "offline",
+      "status": "pass",
+      "detail": "aiken test \"arithmetic\": pass"
+    }
+  ]
+}

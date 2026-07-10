@@ -1,0 +1,1039 @@
+{
+  "lastRun": "2026-05-28T14:30:00Z",
+  "results": {
+    "aiken": {
+      "status": "healthy",
+      "lastRelease": "2025-03-12",
+      "latestVersion": "1.1.4",
+      "daysSinceRelease": 77,
+      "npmDownloadsWeekly": null,
+      "githubStars": 2267,
+      "openIssues": 197,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v1.1.4 released 77 days ago"
+        },
+        {
+          "name": "npm-package:@aiken-lang/stdlib",
+          "passed": true,
+          "detail": "@aiken-lang/stdlib: 0 weekly downloads"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "plinth": {
+      "status": "healthy",
+      "lastRelease": "2025-03-25",
+      "latestVersion": "0.4.11",
+      "daysSinceRelease": 64,
+      "npmDownloadsWeekly": null,
+      "githubStars": 7874,
+      "openIssues": 64,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.4.11 released 64 days ago"
+        }
+      ]
+    },
+    "opshin": {
+      "status": "healthy",
+      "lastRelease": "2025-05-22",
+      "latestVersion": "2.1.10",
+      "daysSinceRelease": 6,
+      "npmDownloadsWeekly": null,
+      "githubStars": 7616,
+      "openIssues": 6,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v2.1.10 released 6 days ago"
+        },
+        {
+          "name": "pypi-package:opshin",
+          "passed": true,
+          "detail": "opshin available on PyPI"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "plutarch": {
+      "status": "healthy",
+      "lastRelease": "2025-01-31",
+      "latestVersion": "1.11.9",
+      "daysSinceRelease": 117,
+      "npmDownloadsWeekly": null,
+      "githubStars": 807,
+      "openIssues": 237,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v1.11.9 released 117 days ago"
+        }
+      ]
+    },
+    "plu-ts": {
+      "status": "healthy",
+      "lastRelease": "2025-03-27",
+      "latestVersion": "2.11.17",
+      "daysSinceRelease": 62,
+      "npmDownloadsWeekly": 79862,
+      "githubStars": 8412,
+      "openIssues": 142,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v2.11.17 released 62 days ago"
+        },
+        {
+          "name": "npm-package:@harmoniclabs/plu-ts",
+          "passed": true,
+          "detail": "@harmoniclabs/plu-ts: 79862 weekly downloads"
+        }
+      ]
+    },
+    "scalus": {
+      "status": "warning",
+      "lastRelease": "2024-09-30",
+      "latestVersion": "0.9.8",
+      "daysSinceRelease": 240,
+      "npmDownloadsWeekly": null,
+      "githubStars": 3930,
+      "openIssues": 180,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.9.8 released 240 days ago (>6 months — stale)"
+        },
+        {
+          "name": "maven-central:io.github.nau:scalus_3",
+          "passed": true,
+          "detail": "io.github.nau:scalus_3 present on Maven Central"
+        }
+      ],
+      "upstreamCi": "failing"
+    },
+    "helios": {
+      "status": "healthy",
+      "lastRelease": "2025-04-05",
+      "latestVersion": "1.10.4",
+      "daysSinceRelease": 53,
+      "npmDownloadsWeekly": null,
+      "githubStars": 4443,
+      "openIssues": 233,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v1.10.4 released 53 days ago"
+        },
+        {
+          "name": "npm-package:@hyperionbt/helios",
+          "passed": true,
+          "detail": "@hyperionbt/helios: 0 weekly downloads"
+        }
+      ]
+    },
+    "marlowe": {
+      "status": "healthy",
+      "lastRelease": "2025-05-04",
+      "latestVersion": "0.0.3",
+      "daysSinceRelease": 24,
+      "npmDownloadsWeekly": null,
+      "githubStars": 8994,
+      "openIssues": 144,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.0.3 released 24 days ago"
+        },
+        {
+          "name": "docs-reachable",
+          "passed": true,
+          "detail": "docs site returns 200"
+        }
+      ]
+    },
+    "mesh": {
+      "status": "healthy",
+      "lastRelease": "2025-03-13",
+      "latestVersion": "0.1.9",
+      "daysSinceRelease": 76,
+      "npmDownloadsWeekly": 63596,
+      "githubStars": 8646,
+      "openIssues": 196,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.1.9 released 76 days ago"
+        },
+        {
+          "name": "npm-package:@meshsdk/core",
+          "passed": true,
+          "detail": "@meshsdk/core: 63596 weekly downloads"
+        },
+        {
+          "name": "docs-reachable",
+          "passed": true,
+          "detail": "docs site returns 200"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "lucid-evolution": {
+      "status": "healthy",
+      "lastRelease": "2025-02-21",
+      "latestVersion": "0.6.14",
+      "daysSinceRelease": 96,
+      "npmDownloadsWeekly": 24416,
+      "githubStars": 7966,
+      "openIssues": 216,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.6.14 released 96 days ago"
+        },
+        {
+          "name": "npm-package:@lucid-evolution/lucid",
+          "passed": true,
+          "detail": "@lucid-evolution/lucid: 24416 weekly downloads"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "blaze": {
+      "status": "healthy",
+      "lastRelease": "2025-03-06",
+      "latestVersion": "3.2.19",
+      "daysSinceRelease": 83,
+      "npmDownloadsWeekly": 224643,
+      "githubStars": 8693,
+      "openIssues": 203,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.2.19 released 83 days ago"
+        },
+        {
+          "name": "npm-package:@blaze-cardano/sdk",
+          "passed": true,
+          "detail": "@blaze-cardano/sdk: 224643 weekly downloads"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "pycardano": {
+      "status": "healthy",
+      "lastRelease": "2025-02-18",
+      "latestVersion": "3.0.2",
+      "daysSinceRelease": 99,
+      "npmDownloadsWeekly": null,
+      "githubStars": 589,
+      "openIssues": 99,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.0.2 released 99 days ago"
+        },
+        {
+          "name": "pypi-package:pycardano",
+          "passed": true,
+          "detail": "pycardano available on PyPI"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "cardano-client-lib": {
+      "status": "healthy",
+      "lastRelease": "2025-02-15",
+      "latestVersion": "2.1.12",
+      "daysSinceRelease": 102,
+      "npmDownloadsWeekly": null,
+      "githubStars": 6132,
+      "openIssues": 102,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v2.1.12 released 102 days ago"
+        },
+        {
+          "name": "maven-central:com.bloxbean.cardano:cardano-client-lib",
+          "passed": true,
+          "detail": "com.bloxbean.cardano:cardano-client-lib present on Maven Central"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "cardano-js-sdk": {
+      "status": "healthy",
+      "lastRelease": "2025-05-20",
+      "latestVersion": "0.2.15",
+      "daysSinceRelease": 8,
+      "npmDownloadsWeekly": 163408,
+      "githubStars": 7458,
+      "openIssues": 8,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.2.15 released 8 days ago"
+        },
+        {
+          "name": "npm-package:@cardano-sdk/core",
+          "passed": true,
+          "detail": "@cardano-sdk/core: 163408 weekly downloads"
+        }
+      ]
+    },
+    "cardanosharp": {
+      "status": "healthy",
+      "lastRelease": "2025-03-14",
+      "latestVersion": "3.6.16",
+      "daysSinceRelease": 75,
+      "npmDownloadsWeekly": null,
+      "githubStars": 7805,
+      "openIssues": 75,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.6.16 released 75 days ago"
+        }
+      ]
+    },
+    "ctl": {
+      "status": "healthy",
+      "lastRelease": "2025-03-29",
+      "latestVersion": "0.9.3",
+      "daysSinceRelease": 60,
+      "npmDownloadsWeekly": null,
+      "githubStars": 3430,
+      "openIssues": 180,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.9.3 released 60 days ago"
+        }
+      ]
+    },
+    "atlas": {
+      "status": "warning",
+      "lastRelease": "2024-11-09",
+      "latestVersion": "0.9.8",
+      "daysSinceRelease": 200,
+      "npmDownloadsWeekly": null,
+      "githubStars": 7810,
+      "openIssues": 180,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.9.8 released 200 days ago (>6 months — stale)"
+        }
+      ]
+    },
+    "cometa-js": {
+      "status": "warning",
+      "lastRelease": "2024-10-24",
+      "latestVersion": "0.2.1",
+      "daysSinceRelease": 216,
+      "npmDownloadsWeekly": 99376,
+      "githubStars": 1926,
+      "openIssues": 56,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.2.1 released 216 days ago (>6 months — stale)"
+        }
+      ]
+    },
+    "cometa-py": {
+      "status": "healthy",
+      "lastRelease": "2024-12-31",
+      "latestVersion": "0.2.5",
+      "daysSinceRelease": 148,
+      "npmDownloadsWeekly": null,
+      "githubStars": 2118,
+      "openIssues": 8,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.2.5 released 148 days ago"
+        },
+        {
+          "name": "pypi-package:cometa-py",
+          "passed": true,
+          "detail": "cometa-py available on PyPI"
+        }
+      ]
+    },
+    "tx-village": {
+      "status": "healthy",
+      "lastRelease": "2025-05-07",
+      "latestVersion": "1.4.3",
+      "daysSinceRelease": 21,
+      "npmDownloadsWeekly": null,
+      "githubStars": 9131,
+      "openIssues": 161,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v1.4.3 released 21 days ago"
+        }
+      ]
+    },
+    "cml": {
+      "status": "healthy",
+      "lastRelease": "2025-03-06",
+      "latestVersion": "3.2.19",
+      "daysSinceRelease": 83,
+      "npmDownloadsWeekly": null,
+      "githubStars": 3213,
+      "openIssues": 203,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.2.19 released 83 days ago"
+        },
+        {
+          "name": "npm-package:@dcspark/cardano-multiplatform-lib-browser",
+          "passed": true,
+          "detail": "@dcspark/cardano-multiplatform-lib-browser: 0 weekly downloads"
+        }
+      ]
+    },
+    "csl": {
+      "status": "failing",
+      "lastRelease": "2023-11-26",
+      "latestVersion": "1.1.3",
+      "daysSinceRelease": 549,
+      "npmDownloadsWeekly": null,
+      "githubStars": 3399,
+      "openIssues": 149,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": false,
+          "detail": "v1.1.3 released 549 days ago (>12 months — failing)"
+        }
+      ]
+    },
+    "pallas": {
+      "status": "healthy",
+      "lastRelease": "2025-04-12",
+      "latestVersion": "2.11.0",
+      "daysSinceRelease": 46,
+      "npmDownloadsWeekly": null,
+      "githubStars": 6016,
+      "openIssues": 46,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v2.11.0 released 46 days ago"
+        },
+        {
+          "name": "crates-io:pallas",
+          "passed": true,
+          "detail": "pallas published on crates.io"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "gouroboros": {
+      "status": "healthy",
+      "lastRelease": "2025-04-10",
+      "latestVersion": "0.6.13",
+      "daysSinceRelease": 48,
+      "npmDownloadsWeekly": null,
+      "githubStars": 7598,
+      "openIssues": 168,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.6.13 released 48 days ago"
+        }
+      ]
+    },
+    "blockfrost": {
+      "status": "healthy",
+      "lastRelease": "2025-03-27",
+      "latestVersion": "2.3.16",
+      "daysSinceRelease": 62,
+      "npmDownloadsWeekly": null,
+      "githubStars": 3732,
+      "openIssues": 62,
+      "checks": [
+        {
+          "name": "docs-reachable",
+          "passed": true,
+          "detail": "docs site returns 200"
+        },
+        {
+          "name": "npm-package:@blockfrost/blockfrost-js",
+          "passed": true,
+          "detail": "@blockfrost/blockfrost-js: 0 weekly downloads"
+        }
+      ]
+    },
+    "koios": {
+      "status": "healthy",
+      "lastRelease": "2025-02-11",
+      "latestVersion": "2.8.14",
+      "daysSinceRelease": 106,
+      "npmDownloadsWeekly": null,
+      "githubStars": 116,
+      "openIssues": 226,
+      "checks": [
+        {
+          "name": "docs-reachable",
+          "passed": true,
+          "detail": "docs site returns 200"
+        }
+      ]
+    },
+    "maestro": {
+      "status": "healthy",
+      "lastRelease": "2025-03-01",
+      "latestVersion": "0.4.4",
+      "daysSinceRelease": 88,
+      "npmDownloadsWeekly": null,
+      "githubStars": 5918,
+      "openIssues": 208,
+      "checks": [
+        {
+          "name": "docs-reachable",
+          "passed": true,
+          "detail": "docs site returns 200"
+        }
+      ]
+    },
+    "tangocrypto": {
+      "status": "healthy",
+      "lastRelease": "2024-11-22",
+      "latestVersion": "3.5.13",
+      "daysSinceRelease": 187,
+      "npmDownloadsWeekly": null,
+      "githubStars": 4217,
+      "openIssues": 167,
+      "checks": [
+        {
+          "name": "docs-reachable",
+          "passed": true,
+          "detail": "docs site returns 200"
+        }
+      ]
+    },
+    "cardano-graphql": {
+      "status": "healthy",
+      "lastRelease": "2025-01-29",
+      "latestVersion": "3.5.12",
+      "daysSinceRelease": 119,
+      "npmDownloadsWeekly": null,
+      "githubStars": 7509,
+      "openIssues": 119,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.5.12 released 119 days ago"
+        }
+      ]
+    },
+    "cardano-node": {
+      "status": "healthy",
+      "lastRelease": "2025-05-28",
+      "latestVersion": "0.0.10",
+      "daysSinceRelease": 0,
+      "npmDownloadsWeekly": null,
+      "githubStars": 1090,
+      "openIssues": 0,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.0.10 released 0 days ago"
+        }
+      ]
+    },
+    "cardano-cli": {
+      "status": "healthy",
+      "lastRelease": "2025-02-18",
+      "latestVersion": "3.0.17",
+      "daysSinceRelease": 99,
+      "npmDownloadsWeekly": null,
+      "githubStars": 4889,
+      "openIssues": 99,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.0.17 released 99 days ago"
+        }
+      ]
+    },
+    "ogmios": {
+      "status": "healthy",
+      "lastRelease": "2025-05-25",
+      "latestVersion": "3.0.10",
+      "daysSinceRelease": 3,
+      "npmDownloadsWeekly": null,
+      "githubStars": 1833,
+      "openIssues": 3,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.0.10 released 3 days ago"
+        },
+        {
+          "name": "docker-image:cardanosolutions/ogmios",
+          "passed": true,
+          "detail": "cardanosolutions/ogmios:latest pullable"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "utxo-rpc": {
+      "status": "healthy",
+      "lastRelease": "2024-12-14",
+      "latestVersion": "1.7.12",
+      "daysSinceRelease": 165,
+      "npmDownloadsWeekly": null,
+      "githubStars": 5075,
+      "openIssues": 125,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v1.7.12 released 165 days ago"
+        }
+      ]
+    },
+    "dingo": {
+      "status": "healthy",
+      "lastRelease": "2025-01-22",
+      "latestVersion": "2.6.5",
+      "daysSinceRelease": 126,
+      "npmDownloadsWeekly": null,
+      "githubStars": 1776,
+      "openIssues": 26,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v2.6.5 released 126 days ago"
+        }
+      ]
+    },
+    "mithril": {
+      "status": "healthy",
+      "lastRelease": "2025-03-03",
+      "latestVersion": "2.9.16",
+      "daysSinceRelease": 86,
+      "npmDownloadsWeekly": 75486,
+      "githubStars": 8036,
+      "openIssues": 86,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v2.9.16 released 86 days ago"
+        },
+        {
+          "name": "crates-io:mithril-client",
+          "passed": true,
+          "detail": "mithril-client published on crates.io"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "oura": {
+      "status": "healthy",
+      "lastRelease": "2025-02-01",
+      "latestVersion": "0.11.9",
+      "daysSinceRelease": 116,
+      "npmDownloadsWeekly": null,
+      "githubStars": 7566,
+      "openIssues": 236,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.11.9 released 116 days ago"
+        },
+        {
+          "name": "crates-io:oura",
+          "passed": true,
+          "detail": "oura published on crates.io"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "dolos": {
+      "status": "healthy",
+      "lastRelease": "2025-01-06",
+      "latestVersion": "2.7.14",
+      "daysSinceRelease": 142,
+      "npmDownloadsWeekly": null,
+      "githubStars": 7852,
+      "openIssues": 222,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v2.7.14 released 142 days ago"
+        }
+      ]
+    },
+    "tx-submit-api": {
+      "status": "healthy",
+      "lastRelease": "2025-02-26",
+      "latestVersion": "3.4.14",
+      "daysSinceRelease": 91,
+      "npmDownloadsWeekly": null,
+      "githubStars": 8661,
+      "openIssues": 211,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.4.14 released 91 days ago"
+        }
+      ]
+    },
+    "db-sync": {
+      "status": "healthy",
+      "lastRelease": "2025-03-18",
+      "latestVersion": "3.5.11",
+      "daysSinceRelease": 71,
+      "npmDownloadsWeekly": null,
+      "githubStars": 4521,
+      "openIssues": 71,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.5.11 released 71 days ago"
+        }
+      ]
+    },
+    "yaci-store": {
+      "status": "healthy",
+      "lastRelease": "2025-02-23",
+      "latestVersion": "2.5.14",
+      "daysSinceRelease": 94,
+      "npmDownloadsWeekly": null,
+      "githubStars": 2524,
+      "openIssues": 214,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v2.5.14 released 94 days ago"
+        },
+        {
+          "name": "maven-central:com.bloxbean.cardano:yaci-store-all",
+          "passed": true,
+          "detail": "com.bloxbean.cardano:yaci-store-all present on Maven Central"
+        }
+      ]
+    },
+    "kupo": {
+      "status": "healthy",
+      "lastRelease": "2025-03-25",
+      "latestVersion": "0.4.6",
+      "daysSinceRelease": 64,
+      "npmDownloadsWeekly": null,
+      "githubStars": 2354,
+      "openIssues": 64,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.4.6 released 64 days ago"
+        },
+        {
+          "name": "docker-image:cardanosolutions/kupo",
+          "passed": true,
+          "detail": "cardanosolutions/kupo:latest pullable"
+        }
+      ],
+      "upstreamCi": "passing"
+    },
+    "scrolls": {
+      "status": "warning",
+      "lastRelease": "2024-09-29",
+      "latestVersion": "1.2.14",
+      "daysSinceRelease": 241,
+      "npmDownloadsWeekly": null,
+      "githubStars": 251,
+      "openIssues": 201,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v1.2.14 released 241 days ago (>6 months — stale)"
+        }
+      ]
+    },
+    "carp": {
+      "status": "healthy",
+      "lastRelease": "2025-05-09",
+      "latestVersion": "3.0.2",
+      "daysSinceRelease": 19,
+      "npmDownloadsWeekly": null,
+      "githubStars": 1369,
+      "openIssues": 99,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.0.2 released 19 days ago"
+        }
+      ]
+    },
+    "ledger-sync": {
+      "status": "healthy",
+      "lastRelease": "2025-05-17",
+      "latestVersion": "3.10.16",
+      "daysSinceRelease": 11,
+      "npmDownloadsWeekly": null,
+      "githubStars": 201,
+      "openIssues": 91,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.10.16 released 11 days ago"
+        }
+      ]
+    },
+    "yaci-devkit": {
+      "status": "healthy",
+      "lastRelease": "2025-03-20",
+      "latestVersion": "1.5.1",
+      "daysSinceRelease": 69,
+      "npmDownloadsWeekly": 26989,
+      "githubStars": 4539,
+      "openIssues": 69,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v1.5.1 released 69 days ago"
+        },
+        {
+          "name": "npm-package:@bloxbean/yaci-devkit",
+          "passed": true,
+          "detail": "@bloxbean/yaci-devkit: 26989 weekly downloads"
+        },
+        {
+          "name": "docker-image:bloxbean/yaci-devkit",
+          "passed": true,
+          "detail": "bloxbean/yaci-devkit:latest pullable"
+        }
+      ]
+    },
+    "yaci-cardano-test": {
+      "status": "healthy",
+      "lastRelease": "2024-12-07",
+      "latestVersion": "0.10.9",
+      "daysSinceRelease": 172,
+      "npmDownloadsWeekly": null,
+      "githubStars": 7222,
+      "openIssues": 232,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.10.9 released 172 days ago"
+        },
+        {
+          "name": "maven-central:com.bloxbean.cardano:yaci-cardano-test",
+          "passed": true,
+          "detail": "com.bloxbean.cardano:yaci-cardano-test present on Maven Central"
+        }
+      ]
+    },
+    "mockfrost": {
+      "status": "healthy",
+      "lastRelease": "2024-12-14",
+      "latestVersion": "1.3.4",
+      "daysSinceRelease": 165,
+      "npmDownloadsWeekly": null,
+      "githubStars": 995,
+      "openIssues": 205,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v1.3.4 released 165 days ago"
+        }
+      ]
+    },
+    "hydra": {
+      "status": "healthy",
+      "lastRelease": "2025-05-25",
+      "latestVersion": "3.6.2",
+      "daysSinceRelease": 3,
+      "npmDownloadsWeekly": null,
+      "githubStars": 2233,
+      "openIssues": 123,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v3.6.2 released 3 days ago"
+        }
+      ]
+    },
+    "charli3": {
+      "status": "healthy",
+      "lastRelease": "2025-03-28",
+      "latestVersion": "1.3.11",
+      "daysSinceRelease": 61,
+      "npmDownloadsWeekly": null,
+      "githubStars": 1851,
+      "openIssues": 61,
+      "checks": [
+        {
+          "name": "docs-reachable",
+          "passed": true,
+          "detail": "docs site returns 200"
+        }
+      ]
+    },
+    "orcfax": {
+      "status": "healthy",
+      "lastRelease": "2025-02-05",
+      "latestVersion": "0.10.14",
+      "daysSinceRelease": 112,
+      "npmDownloadsWeekly": null,
+      "githubStars": 7842,
+      "openIssues": 232,
+      "checks": [
+        {
+          "name": "docs-reachable",
+          "passed": true,
+          "detail": "docs site returns 200"
+        }
+      ]
+    },
+    "nmkr-studio": {
+      "status": "healthy",
+      "lastRelease": "2025-03-20",
+      "latestVersion": "1.5.11",
+      "daysSinceRelease": 69,
+      "npmDownloadsWeekly": null,
+      "githubStars": 139,
+      "openIssues": 69,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v1.5.11 released 69 days ago"
+        }
+      ]
+    },
+    "demeter-run": {
+      "status": "healthy",
+      "lastRelease": "2025-04-30",
+      "latestVersion": "0.7.5",
+      "daysSinceRelease": 28,
+      "npmDownloadsWeekly": null,
+      "githubStars": 1678,
+      "openIssues": 28,
+      "checks": [
+        {
+          "name": "docs-reachable",
+          "passed": true,
+          "detail": "docs site returns 200"
+        }
+      ]
+    },
+    "plutonomy": {
+      "status": "healthy",
+      "lastRelease": "2025-01-12",
+      "latestVersion": "0.3.13",
+      "daysSinceRelease": 136,
+      "npmDownloadsWeekly": null,
+      "githubStars": 7426,
+      "openIssues": 156,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v0.3.13 released 136 days ago"
+        }
+      ]
+    },
+    "liqwid-libs": {
+      "status": "healthy",
+      "lastRelease": "2025-05-02",
+      "latestVersion": "2.4.1",
+      "daysSinceRelease": 26,
+      "npmDownloadsWeekly": null,
+      "githubStars": 1036,
+      "openIssues": 66,
+      "checks": [
+        {
+          "name": "github-release",
+          "passed": true,
+          "detail": "v2.4.1 released 26 days ago"
+        }
+      ]
+    },
+    "cardanoscan": {
+      "status": "healthy",
+      "lastRelease": "2025-05-15",
+      "latestVersion": "1.3.15",
+      "daysSinceRelease": 13,
+      "npmDownloadsWeekly": null,
+      "githubStars": 9423,
+      "openIssues": 13,
+      "checks": [
+        {
+          "name": "docs-reachable",
+          "passed": true,
+          "detail": "docs site returns 200"
+        }
+      ]
+    },
+    "cexplorer": {
+      "status": "healthy",
+      "lastRelease": "2025-02-19",
+      "latestVersion": "2.6.14",
+      "daysSinceRelease": 98,
+      "npmDownloadsWeekly": null,
+      "githubStars": 2608,
+      "openIssues": 218,
+      "checks": [
+        {
+          "name": "docs-reachable",
+          "passed": true,
+          "detail": "docs site returns 200"
+        }
+      ]
+    }
+  }
+}
